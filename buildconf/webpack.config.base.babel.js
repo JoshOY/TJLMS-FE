@@ -1,6 +1,6 @@
 import path from 'path';
 import webpack from 'webpack';
-// import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import HtmlPlugin from 'html-webpack-plugin';
 
 import {
   jsLoader,
@@ -16,6 +16,21 @@ import {
 const CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
 const prjRoot = p => path.resolve(__dirname, '../', p);
 
+const htmlPluginConfig = {
+  inject: false,
+  title: 'TJLMS',
+  template: 'src/view/index.ejs',
+  meta: [
+    {
+      name: 'description',
+      content: 'Tongji SSE learning management system.',
+    },
+  ],
+  mobile: true,
+  links: [],
+  appMountId: 'app-root',
+};
+
 export default function (env) {
   const isProduction = (env === 'production');
   return {
@@ -27,7 +42,7 @@ export default function (env) {
     output: {
       filename: '[name].js?[chunkhash]',
       path: isProduction ? prjRoot('dist') : prjRoot('devbuild'),
-      publicPath: '/public/',
+      publicPath: isProduction ? '/static/' : '/',
       chunkFilename: '[name].chunk.js?[chunkhash]',
     },
     /* module */
@@ -49,6 +64,7 @@ export default function (env) {
     },
     /* plugins */
     plugins: [
+      new HtmlPlugin(htmlPluginConfig),
       new CommonsChunkPlugin({
         // Specify the common bundle's name.
         names: ['vendor'],
