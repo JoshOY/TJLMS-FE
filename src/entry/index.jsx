@@ -13,7 +13,9 @@ import store from '../store';
 /**
  * Debug only
  */
-window.UiStore = store;
+if (window.APP_DEV_ENV) {
+  window.UiStore = store;
+}
 
 const main = async () => {
   ReactDOM.render(

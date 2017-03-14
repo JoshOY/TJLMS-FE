@@ -64,7 +64,10 @@ export default function (env) {
     },
     /* plugins */
     plugins: [
-      new HtmlPlugin(htmlPluginConfig),
+      new HtmlPlugin({
+        ...htmlPluginConfig,
+        dev: (isProduction),
+      }),
       new CommonsChunkPlugin({
         // Specify the common bundle's name.
         names: ['vendor'],

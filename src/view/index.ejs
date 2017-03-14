@@ -59,6 +59,11 @@
 <% for (item of htmlWebpackPlugin.options.appMountIds) { %>
 <div id="<%= item %>"></div>
 <% } %>
+<% if (htmlWebpackPlugin.options.dev) { %>
+<script type="text/javascript">
+  window.APP_DEV_ENV = true;
+</script>
+<% } %>
 <% if (htmlWebpackPlugin.options.window) { %>
 <script type="text/javascript">
   <% for (key in htmlWebpackPlugin.options.window) { %>

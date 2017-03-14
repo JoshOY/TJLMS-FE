@@ -4,15 +4,29 @@
  * Created on 2017-03-14
  */
 
-
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 
 import { middleware as appRouterMiddleware } from './router.jsx';
-import appStore from './reducer';
+import appReducer from './reducer';
 
-const store = createStore(
-  appStore,
-  applyMiddleware(appRouterMiddleware),
-);
+let store = null;
 
-export default store;
+if (window.APP_DEV_ENV) {
+  /* eslint-disable no-underscore-dangle */
+  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+  /* eslint-enable */
+  store = createStore(
+    appReducer,
+    composeEnhancers(applyMiddleware(
+      appRouterMiddleware,
+    )),
+  );
+} else {
+  store = createStore(appReducer, applyMiddleware(
+    appRouterMiddleware,
+  ));
+}
+
+const storeExport = store;
+
+export default storeExport;
