@@ -4,6 +4,7 @@ import webpack from 'webpack';
 
 import {
   jsLoader,
+  eslintLoader,
   projectStyleSCSSsheetLoader,
   projectStyleSASSsheetLoader,
   vendorsStylesheetLoader,
@@ -32,6 +33,7 @@ export default function (env) {
     /* module */
     module: {
       rules: [
+        eslintLoader(),
         jsLoader(),
         projectStyleSCSSsheetLoader(),
         projectStyleSASSsheetLoader(),

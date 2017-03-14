@@ -1,5 +1,8 @@
+import path from 'path';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
+
+const prjRoot = p => path.resolve(__dirname, '../', p);
 
 export const extractProjectCSS = new ExtractTextPlugin({
   filename: 'style.css?[sha1:contenthash:hex:10]',
@@ -45,17 +48,24 @@ export const jsLoader = () => ({
           'transform-async-to-generator',
           'transform-regenerator',
           'transform-runtime',
+          'react-hot-loader/babel',
         ],
       },
     },
   ],
 });
 
-export const eslintLoader = {
+export const eslintLoader = () => ({
+  enforce: 'pre',
   test: /\.jsx?$/,
-  loader: 'eslint',
   exclude: /node_modules\//,
-};
+  use: [{
+    loader: 'eslint-loader',
+    options: {
+      configFile: prjRoot('.eslintrc.yml'),
+    },
+  }],
+});
 
 export const vendorsStylesheetLoader = () => ({
   test: /\.css$/,
