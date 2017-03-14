@@ -1,0 +1,64 @@
+parser: babel-eslint
+env:
+  browser: true
+  commonjs: true
+  es6: true
+  jquery: true
+extends:
+  - airbnb
+  - plugin:react/recommended
+parserOptions:
+  ecmaVersion: 7
+  sourceType: module
+  ecmaFeatures:
+    - impliedStrict
+    - experimentalObjectRestSpread
+    - jsx
+plugins:
+  - babel
+  - react
+globals:
+  __webpack_public_path__: true
+  __webpack_require__: true
+  UiStore: true
+  UiHistory: true
+rules:
+  no-unused-vars: error
+  no-console: warn
+  no-debugger: warn
+  # no-underscore-dangle: off
+  indent:
+    - error
+    - 2
+    - { SwitchCase: 0 }
+  func-names:
+    - off
+  linebreak-style:
+    - error
+    - unix
+  quotes:
+    - error
+    - single
+  semi:
+    - error
+    - always
+  # react/prefer-stateless-function: 0
+  # react/display-name:
+  #   - off
+  new-cap:
+    - off
+  global-require:
+    - off
+  generator-star-spacing: 0
+  babel/generator-star-spacing:
+    - off
+  # no-param-reassign:
+  #   - off
+  camelcase:
+    - off
+  react/forbid-prop-types:
+    - off
+  jsx-a11y/no-static-element-interactions:
+    - off
+  object-shorthand:
+    - off

@@ -1,0 +1,17 @@
+{
+  "presets": ["es2015", "stage-0", "react"],
+  "plugins": [
+    "transform-decorators-legacy",
+    "babel-plugin-transform-runtime",
+    "syntax-async-functions",
+    "transform-regenerator",
+    [
+      "import",
+      [{
+        "libraryName": "antd",
+        "style": true
+      }]
+    ],
+    "react-hot-loader/babel"
+  ]
+}
