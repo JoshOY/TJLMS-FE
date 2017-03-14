@@ -7,8 +7,6 @@ import webpackDevMiddleware from 'webpack-dev-middleware';
 
 import devSettings from '../webpack.config.dev.babel';
 
-// const devbuildRoot = '';
-
 const main = async () => {
   const app = express();
   const middlewareConfig = {

@@ -36,7 +36,7 @@ export default function (env) {
   return {
     /* entry */
     entry: {
-      main: prjRoot('src/entry/index.js'),
+      main: prjRoot('src/entry/index.jsx'),
     },
     /* output */
     output: {
