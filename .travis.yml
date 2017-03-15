@@ -1,0 +1,8 @@
+language: javascript
+node_js:
+  - "6"
+  - "6.9"
+before_script:
+  - npm install
+script:
+  - npm run lint
