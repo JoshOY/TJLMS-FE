@@ -1,30 +1,16 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import express from 'express';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import webpack from 'webpack';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import webpackDevMiddleware from 'webpack-dev-middleware';
+import path from 'path';
 
-import devSettings from '../webpack.config.dev.babel';
+const prjRoot = p => path.resolve(__dirname, '../../', p);
 
 const main = async () => {
   const app = express();
-  const middlewareConfig = {
-    noInfo: false,
-    quiet: false,
-    lazy: false,
-    publicPath: '/',
-    index: 'index.html',
-    stats: {
-      colors: true,
-    },
-  };
-  /*
-  app.route('/static/:filePath').get((req, res) => {
-    res.sendFile(`static/${req.params.filePath}`);
+  /* app routes */
+  app.use('/static', express.static(prjRoot('./devbuild/')));
+  app.get('/*', (req, res) => {
+    res.sendFile('index.html', { root: prjRoot('./devbuild/') });
   });
-  */
-  app.use(webpackDevMiddleware(webpack(devSettings), middlewareConfig));
+
   app.listen(4000, () => {
     // eslint-disable-next-line no-console
     console.log('Webpack dev server listening on port 4000...');

@@ -4,7 +4,7 @@
  * Created on 2017-03-14
  */
 
-import React from 'react';
+import React, { PropTypes as P } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
@@ -12,16 +12,28 @@ import createHistory from 'history/createBrowserHistory';
 const history = createHistory();
 const midware = routerMiddleware(history);
 
-const AppRouter = () => (
-  <ConnectedRouter history={history}>
-    <Router>
-      <div className="app-root">
-        <h1>App root</h1>
-      </div>
-    </Router>
-  </ConnectedRouter>
-);
+class AppRouter extends React.Component {
+  static propTypes = {
+    children: P.node.isRequired,
+  };
 
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  render() {
+    return (
+      <ConnectedRouter history={history}>
+        <Router>
+          <div className="router-root">
+            {this.props.children}
+          </div>
+        </Router>
+      </ConnectedRouter>
+    );
+  }
+}
 export const middleware = midware;
 
 export default AppRouter;
