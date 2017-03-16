@@ -31,6 +31,8 @@ export const scss = () => 'sass-loader';
 
 export const sass = () => 'sass-loader?indentedSyntax';
 
+export const less = () => 'less-loader';
+
 export const jsLoader = () => ({
   test: /\.jsx?$/,
   exclude: /node_modules/,
@@ -49,6 +51,10 @@ export const jsLoader = () => ({
           'transform-regenerator',
           'transform-runtime',
           'react-hot-loader/babel',
+          ['import', {
+            libraryName: 'antd',
+            style: 'css',
+          }],
         ],
       },
     },
@@ -78,6 +84,11 @@ export const projectStyleSCSSsheetLoader = () => ({
   use: extractProjectCSS.extract([css(), postcss(), scss()]),
 });
 
+export const projectStyleLESSsheetLoader = () => ({
+  test: /\.less$/,
+  use: extractVendorCSS.extract([css(), postcss(), less()]),
+});
+
 export const projectStyleSASSsheetLoader = () => ({
   test: /\.sass$/,
   use: extractProjectCSS.extract([css(), postcss(), sass()]),
@@ -89,12 +100,13 @@ export const fontsAndImagesLoader = () => ({
 });
 
 export default {
-  jsLoader: jsLoader,
-  eslintLoader: eslintLoader,
-  vendorsStylesheetLoader: vendorsStylesheetLoader,
-  projectStyleSCSSsheetLoader: projectStyleSCSSsheetLoader,
-  projectStyleSASSsheetLoader: projectStyleSASSsheetLoader,
-  fontsAndImagesLoader: fontsAndImagesLoader,
-  extractVendorCSS: extractVendorCSS,
-  extractProjectCSS: extractProjectCSS,
+  jsLoader,
+  eslintLoader,
+  vendorsStylesheetLoader,
+  projectStyleSCSSsheetLoader,
+  projectStyleSASSsheetLoader,
+  projectStyleLESSsheetLoader,
+  fontsAndImagesLoader,
+  extractVendorCSS,
+  extractProjectCSS,
 };

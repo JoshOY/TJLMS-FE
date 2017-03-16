@@ -1,4 +1,15 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
+/**
+ * module styles
+ */
+import './styles/index.sass';
+
+/**
+ * submodules
+ */
+import LoginForm from './submodules/login-form.jsx';
 
 class LoginModule extends React.Component {
 
@@ -11,12 +22,15 @@ class LoginModule extends React.Component {
 
   render() {
     return (
-      <div className="login-module">
-        Login
+      <div className="app-module login">
+        <div className="login__form-container">
+          <h1>TJLMS - 登录</h1>
+          <LoginForm />
+        </div>
       </div>
     );
   }
 
 }
 
-export default LoginModule;
+export default connect()(LoginModule);

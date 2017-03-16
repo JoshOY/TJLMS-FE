@@ -1,0 +1,36 @@
+//noinspection CssUnknownTarget
+@import 'src/common/styles/variables'
+//noinspection CssUnknownTarget
+@import 'src/common/styles/functions'
+
+.app-module.login
+  // background: linear-gradient(limegreen,transparent), linear-gradient(90deg,skyblue,transparent),linear-gradient(-90deg,coral,transparent)
+  // background:  linear-gradient(to left, #2b5876 , #4e4376)
+  background: linear-gradient(#646181,transparent),linear-gradient(90deg,#197bc1,transparent),linear-gradient(-90deg,#274671,transparent)
+  background-blend-mode: screen
+  height: 100%
+  position: relative
+
+.login
+
+  &__form-container
+    display: block
+    position: absolute
+    top: 50%
+    left: 50%
+    transform: translate3d(-50%,-50%,0)
+    width: 320px
+    height: 360px
+    background: $white
+    border-radius: 4px
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.5)
+    padding: 35px 25px
+
+  &__form
+    display: block
+    position: relative
+    margin-top: 35px
+
+    &__submit-btn
+      margin-top: 5px
+      width: 100%
