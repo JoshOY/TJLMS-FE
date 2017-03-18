@@ -27,6 +27,15 @@ export const file = () => ({
   },
 });
 
+export const jsonLoader = () => ({
+  test: /\.json$/,
+  use: [
+    {
+      loader: 'json-loader',
+    },
+  ],
+});
+
 export const scss = () => 'sass-loader';
 
 export const sass = () => 'sass-loader?indentedSyntax';
@@ -101,6 +110,7 @@ export const fontsAndImagesLoader = () => ({
 
 export default {
   jsLoader,
+  jsonLoader,
   eslintLoader,
   vendorsStylesheetLoader,
   projectStyleSCSSsheetLoader,

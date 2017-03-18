@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
+import ReactMarkdown from 'react-markdown';
 
 /**
  * Import styles
@@ -13,10 +14,14 @@ import './styles/index.sass';
 import QTag from '../../datamodels/qtag';
 
 /**
- * Import submodules
+ * Import submodules or components
  */
 import Aside from './submodule/aside.jsx';
 import { QuestionTagsContainer } from './submodule/question-tag';
+import CodeRenderer from '../../common/components/code-renderer.jsx';
+
+// mock data
+import mockDemoQuestionMarkdown from '../../common/mockdata/demo-question-markdown';
 
 const mockTags = _([
   new QTag('P1', 'current'),
@@ -52,7 +57,17 @@ class AssignmentsModule extends React.Component {
             tags={mockTags}
             numEachRow={10}
           />
-          <div>Main body</div>
+          <div>
+            <ReactMarkdown
+              className="app-markdown assignments__content"
+              source={mockDemoQuestionMarkdown}
+              escapeHtml
+              renderers={{
+                CodeBlock: CodeRenderer,
+                Code: CodeRenderer,
+              }}
+            />
+          </div>
         </main>
       </div>
     );

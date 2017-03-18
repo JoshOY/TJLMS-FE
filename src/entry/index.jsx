@@ -6,7 +6,11 @@ import { Route, Switch } from 'react-router-dom';
 /**
  * vendor styles
  */
-// import 'antd/dist/antd.min.css';
+import 'highlight.js/styles/vs.css';
+
+/**
+ * common styles
+ */
 import '../common/styles/index.sass';
 
 import AppRouter from '../router.jsx';

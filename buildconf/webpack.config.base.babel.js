@@ -4,6 +4,7 @@ import HtmlPlugin from 'html-webpack-plugin';
 
 import {
   jsLoader,
+  jsonLoader,
   eslintLoader,
   projectStyleSCSSsheetLoader,
   projectStyleSASSsheetLoader,
@@ -51,6 +52,7 @@ export default function (env) {
       rules: [
         eslintLoader(),
         jsLoader(),
+        jsonLoader(),
         projectStyleSCSSsheetLoader(),
         projectStyleSASSsheetLoader(),
         projectStyleLESSsheetLoader(),
