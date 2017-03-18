@@ -17,5 +17,14 @@ npm install
 To start a local dev environment:
 
 ```bash
+# In bash 0
+npm run watch
+```
+
+```bash
+# In bash 1
 npm run dev
 ```
+
+Open [http://localhost:4000](http://localhost:4000) and enjoy your coding.
+

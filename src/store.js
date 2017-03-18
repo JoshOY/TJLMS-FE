@@ -5,9 +5,10 @@
  */
 
 import { createStore, applyMiddleware, compose } from 'redux';
+import promiseMiddleware from 'redux-promise-middleware';
 
 import { middleware as appRouterMiddleware } from './router.jsx';
-import appReducer from './reducer';
+import appReducer from './modules/reducer';
 
 let store = null;
 
@@ -19,11 +20,13 @@ if (window.APP_DEV_ENV) {
     appReducer,
     composeEnhancers(applyMiddleware(
       appRouterMiddleware,
+      promiseMiddleware(),
     )),
   );
 } else {
   store = createStore(appReducer, applyMiddleware(
     appRouterMiddleware,
+    promiseMiddleware(),
   ));
 }
 

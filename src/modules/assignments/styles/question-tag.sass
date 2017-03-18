@@ -1,0 +1,61 @@
+//noinspection CssUnknownTarget
+@import 'src/common/styles/variables'
+//noinspection CssUnknownTarget
+@import 'src/common/styles/functions'
+
+.assignments-question-tags-container
+  display: table
+  min-width: 800px
+  width: 100%
+  table-layout: fixed
+  border-collapse: collapse
+
+  &__row
+    border: 1px solid #ddd
+    & + &
+      border-top: none
+
+.assignments-question-tag
+  display: table-cell
+  box-sizing: border-box
+  border-left: 1px solid #ddd
+  border-right: 1px solid #ddd
+  text-align: center
+  height: 42px
+  line-height: 42px
+  cursor: pointer
+  color: #333
+  transition: background .2s, color .2s
+  transition-timing-function: ease-in-out
+  &:hover
+    background: #ddd
+  &:active
+    background: shade($white, 20%)
+
+  &--current
+    background: $theme-blue
+    color: $white
+    cursor: default
+    &:hover, &:active
+      background: $theme-blue
+
+  &--answered
+    background: $misc-green
+    color: $white
+    &:hover
+      background: tint($misc-green, 20%)
+    &:active
+      background: shade($misc-green, 20%)
+
+  &--half-answered
+    background: $alert-yellow
+    color: $white
+    &:hover
+      background: tint($alert-yellow, 20%)
+    &:active
+      background: shade($alert-yellow, 20%)
+
+  &--null
+    cursor: default
+    &:hover, &:active
+      background: #fff

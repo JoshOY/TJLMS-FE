@@ -11,7 +11,7 @@ import '../common/styles/index.sass';
 
 import AppRouter from '../router.jsx';
 import store from '../store';
-import { Login, NotFound } from '../modules';
+import { Login, NotFound, Assignments } from '../modules';
 
 /**
  * Debug only
@@ -25,6 +25,7 @@ const main = async () => {
     <Provider store={store}>
       <AppRouter>
         <Switch>
+          <Route path="/assignments" exact component={Assignments} />
           <Route path="/login" exact component={Login} />
           <Route component={NotFound} />
         </Switch>
