@@ -52,12 +52,14 @@ class AssignmentsModule extends React.Component {
     return (
       <div className="app-module relative full-size assignments">
         <Aside />
-        <main className="assignments__main">
-          <QuestionTagsContainer
-            tags={mockTags}
-            numEachRow={10}
-          />
-          <div>
+        <main className="disp-flex assignments__main">
+          <div className="assignments__tags-wrapper">
+            <QuestionTagsContainer
+              tags={mockTags}
+              numEachRow={10}
+            />
+          </div>
+          <div className="assignments__content-container">
             <ReactMarkdown
               className="app-markdown assignments__content"
               source={mockDemoQuestionMarkdown}
@@ -67,6 +69,9 @@ class AssignmentsModule extends React.Component {
                 Code: CodeRenderer,
               }}
             />
+          </div>
+          <div className="assignments__op-btns-container">
+            <div>Operation buttons Container</div>
           </div>
         </main>
       </div>
