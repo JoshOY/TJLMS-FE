@@ -9,7 +9,7 @@ import './styles/index.sass';
 /**
  * submodules
  */
-import LoginForm from './submodules/login-form.jsx';
+import LoginForm from './submodules/login-form';
 
 class LoginModule extends React.Component {
 

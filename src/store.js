@@ -7,7 +7,7 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import promiseMiddleware from 'redux-promise-middleware';
 
-import { middleware as appRouterMiddleware } from './router.jsx';
+import { middleware as appRouterMiddleware } from './router';
 import appReducer from './modules/reducer';
 
 let store = null;

@@ -3,7 +3,7 @@ import _ from 'lodash';
 import hash from 'object-hash';
 
 import QTag from 'src/datamodels/qtag';
-import QuestionTag from './question-tag.jsx';
+import QuestionTag from './question-tag';
 
 class QuestionTagsContainer extends React.Component {
 

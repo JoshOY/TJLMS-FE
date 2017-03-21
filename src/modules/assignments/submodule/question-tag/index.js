@@ -1,5 +1,5 @@
-import QuestionTagModule from './question-tag.jsx';
-import QuestionTagsContainerModule from './questions-tags-container.jsx';
+import QuestionTagModule from './question-tag';
+import QuestionTagsContainerModule from './questions-tags-container';
 
 export const QuestionTag = QuestionTagModule;
 export const QuestionTagsContainer = QuestionTagsContainerModule;

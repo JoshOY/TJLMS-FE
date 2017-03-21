@@ -62,6 +62,7 @@ export default function (env) {
     },
     /* resolve */
     resolve: {
+      extensions: ['.js', '.jsx'],
       alias: {
         src: prjRoot('src'),
       },

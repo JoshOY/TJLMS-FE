@@ -67,5 +67,3 @@ rules:
     - off
   object-shorthand:
     - off
-  import/extensions:
-    - off

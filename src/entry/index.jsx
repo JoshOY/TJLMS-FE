@@ -13,7 +13,7 @@ import 'highlight.js/styles/vs.css';
  */
 import '../common/styles/index.sass';
 
-import AppRouter from '../router.jsx';
+import AppRouter from '../router';
 import store from '../store';
 import { Login, NotFound, Assignments } from '../modules';
 

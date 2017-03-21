@@ -16,9 +16,9 @@ import QTag from '../../datamodels/qtag';
 /**
  * Import submodules or components
  */
-import Aside from './submodule/aside.jsx';
+import Aside from './submodule/aside';
 import { QuestionTagsContainer } from './submodule/question-tag';
-import CodeRenderer from '../../common/components/code-renderer.jsx';
+import CodeRenderer from '../../common/components/code-renderer';
 
 // mock data
 import mockDemoQuestionMarkdown from '../../common/mockdata/demo-question-markdown';
