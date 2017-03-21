@@ -2,7 +2,7 @@ import React, { PropTypes as P } from 'react';
 import _ from 'lodash';
 import hash from 'object-hash';
 
-import QTag from '../../../../datamodels/qtag';
+import QTag from 'src/datamodels/qtag';
 import QuestionTag from './question-tag.jsx';
 
 class QuestionTagsContainer extends React.Component {

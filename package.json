@@ -39,6 +39,8 @@
     "eslint": "^3.17.1",
     "eslint-config-airbnb": "^14.1.0",
     "eslint-friendly-formatter": "^2.0.7",
+    "eslint-import-resolver-babel-module": "^3.0.0",
+    "eslint-import-resolver-webpack": "^0.8.1",
     "eslint-loader": "^1.6.3",
     "eslint-plugin-async-await": "0.0.0",
     "eslint-plugin-babel": "^4.1.1",

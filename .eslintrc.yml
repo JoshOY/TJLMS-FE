@@ -23,6 +23,10 @@ globals:
   UiStore: true
   UiHistory: true
   APP_DEV_ENV: true
+settings:
+  import/resolver:
+    webpack:
+      config: 'buildconf/webpack.config.base.babel.js'
 rules:
   no-unused-vars: error
   no-console: warn
