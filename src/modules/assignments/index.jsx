@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import ReactMarkdown from 'react-markdown';
+import { Button } from 'antd';
 
 /**
  * Import styles
@@ -18,6 +19,7 @@ import QTag from '../../datamodels/qtag';
  */
 import Aside from './submodule/aside';
 import { QuestionTagsContainer } from './submodule/question-tag';
+import AnswersTextArea from './submodule/answers-text-area';
 import CodeRenderer from '../../common/components/code-renderer';
 
 // mock data
@@ -69,9 +71,18 @@ class AssignmentsModule extends React.Component {
                 Code: CodeRenderer,
               }}
             />
+            <div className="assignments__answers-container">
+              <AnswersTextArea label={1} />
+              <AnswersTextArea label={2} />
+            </div>
           </div>
           <div className="assignments__op-btns-container">
-            <div>Operation buttons Container</div>
+            <Button
+              type="primary"
+              size="large"
+            >
+              Save
+            </Button>
           </div>
         </main>
       </div>

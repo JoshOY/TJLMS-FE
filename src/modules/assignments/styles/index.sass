@@ -1,5 +1,6 @@
 @import './aside'
 @import './question-tag'
+@import './answers-text-area'
 
 $op-btns-container-height: 60px
 
@@ -34,8 +35,13 @@ $op-btns-container-height: 60px
     flex: 0 0 200px
     flex-basis: $op-btns-container-height
     background: #efefef
+    padding: 0 35px
     width: 100%
     height: $op-btns-container-height
+    line-height: $op-btns-container-height
 
   &__content
     padding: 15px 35px
+
+  &__answers-container
+    padding: 10px 35px
