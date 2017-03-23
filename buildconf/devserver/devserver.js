@@ -1,5 +1,6 @@
 import express from 'express';
 import path from 'path';
+// eslint-disable-next-line
 import proxy from 'express-http-proxy';
 
 const prjRoot = p => path.resolve(__dirname, '../../', p);
