@@ -1,7 +1,8 @@
+import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
 /**
  * vendor styles
@@ -15,7 +16,12 @@ import '../common/styles/index.sass';
 
 import AppRouter from '../router';
 import store from '../store';
-import { Login, NotFound, Assignments } from '../modules';
+import {
+  Login,
+  NotFound,
+  Assignments,
+  Auth,
+} from '../modules';
 
 /**
  * Debug only
@@ -31,6 +37,8 @@ const main = async () => {
         <Switch>
           <Route path="/assignments" exact component={Assignments} />
           <Route path="/login" exact component={Login} />
+          <Route path="/auth" component={Auth} />
+          <Redirect exact from="/" to="/auth" />
           <Route component={NotFound} />
         </Switch>
       </AppRouter>

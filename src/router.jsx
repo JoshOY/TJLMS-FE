@@ -10,6 +10,7 @@ import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
 
 const history = createHistory();
+window.UiHistory = history;
 const midware = routerMiddleware(history);
 
 class AppRouter extends React.Component {
