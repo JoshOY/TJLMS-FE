@@ -1,6 +1,8 @@
 import React, { PropTypes as P } from 'react';
 import { connect } from 'react-redux';
-import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import { Form, Icon, Input, Button } from 'antd';
+
+import LoginActions from '../actions';
 
 const FormItem = Form.Item;
 
@@ -11,18 +13,24 @@ class LoginForm extends React.Component {
 
   static propTypes = {
     form: P.object.isRequired,
+    dispatch: P.func,
+  };
+
+  static defaultProps = {
+    dispatch: () => {},
   };
 
   static rules = {
-    username: [
-      { required: true, message: 'Please input your student ID.' },
-    ],
-    password: [
-      { required: true, message: 'Please input your password.' },
-    ],
-    remember: [
-      { valuePropName: 'checked', initialValue: true },
-    ],
+    username: {
+      rules: [
+        { required: true, message: 'Please input your student ID.' },
+      ],
+    },
+    password: {
+      rules: [
+        { required: true, message: 'Please input your password.' },
+      ],
+    },
   };
 
   constructor(props) {
@@ -30,7 +38,16 @@ class LoginForm extends React.Component {
     this.state = {};
   }
 
-  handleSubmit = () => {};
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        // eslint-disable-next-line no-console
+        console.log('Received values of form: ', values);
+        this.props.dispatch(LoginActions.login(values));
+      }
+    });
+  };
 
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -69,16 +86,6 @@ class LoginForm extends React.Component {
           }
         </FormItem>
         <FormItem className="m-t-lg">
-          {
-            getFieldDecorator(
-              'remember',
-              LoginForm.rules.remember,
-            )(
-              <Checkbox>
-                保持登录
-              </Checkbox>,
-            )
-          }
           <Button
             size="large"
             type="primary"
@@ -93,4 +100,15 @@ class LoginForm extends React.Component {
   }
 }
 
-export default connect()(Form.create()(LoginForm));
+const mapStateToProps = state => ({
+  userStatus: state.auth.userStatus,
+});
+
+const mapDispatchesToProps = dispatch => ({
+  dispatch,
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchesToProps,
+)(Form.create()(LoginForm));

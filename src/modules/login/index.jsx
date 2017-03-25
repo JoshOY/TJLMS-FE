@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { PropTypes as P } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 /**
  * module styles
@@ -11,16 +12,39 @@ import './styles/index.sass';
  */
 import LoginForm from './submodules/login-form';
 
+/**
+ * Import actions
+ */
+import AuthActions from '../auth/actions';
+
 class LoginModule extends React.Component {
 
-  static propTypes = {};
+  static propTypes = {
+    userStatus: P.object,
+  };
+
+  static defaultProps = {
+    userStatus: null,
+  };
 
   constructor(props) {
     super(props);
     this.state = {};
   }
 
+  componentDidMount() {
+    const asyncFn = async (self) => {
+      await self.props.fetchUserStatus();
+    };
+    return asyncFn(this);
+  }
+
   render() {
+    if (this.props.userStatus) {
+      return (
+        <Redirect to="/assignments" />
+      );
+    }
     return (
       <div className="app-module login">
         <div className="login__form-container">
@@ -33,4 +57,16 @@ class LoginModule extends React.Component {
 
 }
 
-export default connect()(LoginModule);
+const mapStateToProps = state => ({
+  userStatus: state.auth.userStatus,
+});
+
+const mapDispatchesToProps = dispatch => ({
+  dispatch,
+  fetchUserStatus: async () => dispatch(await AuthActions.fetchUserStatusAsync(dispatch)()),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchesToProps,
+)(LoginModule);

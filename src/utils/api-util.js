@@ -38,8 +38,8 @@ export default class ApiUtil {
       `${BASE_URL + url + parseQueryParams(queryParams)}`,
       {
         method: 'GET',
+        credentials: 'include',
         headers: {
-          credentials: true,
           Accept: 'application/json;charset=utf-8',
           'Content-Type': 'application/json;charset=utf-8',
         },

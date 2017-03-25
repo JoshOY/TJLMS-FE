@@ -5,6 +5,7 @@
  */
 
 import { createStore, applyMiddleware, compose } from 'redux';
+import ReduxThunk from 'redux-thunk';
 import promiseMiddleware from 'redux-promise-middleware';
 
 import { middleware as appRouterMiddleware } from './router';
@@ -19,12 +20,14 @@ if (window.APP_DEV_ENV) {
   store = createStore(
     appReducer,
     composeEnhancers(applyMiddleware(
+      ReduxThunk,
       appRouterMiddleware,
       promiseMiddleware(),
     )),
   );
 } else {
   store = createStore(appReducer, applyMiddleware(
+    ReduxThunk,
     appRouterMiddleware,
     promiseMiddleware(),
   ));

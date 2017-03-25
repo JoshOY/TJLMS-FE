@@ -1,5 +1,5 @@
 /**
- * Auth related reducer
+ * Login reducer
  * @author JoshOY
  * Created on 2017-03-25
  */
@@ -10,26 +10,22 @@ import { AT } from '../actions';
 
 const initState = {
   asyncActionIdsInObserve: [],
-  isLogin: false,
-  loginCode: 0,
-  userStatus: null,
+  latestLoginActionId: null,
 };
 
 const handleDispatches = {
 
-  [AT.USER_STATUS.success]: (state, action) => {
-    if (action.payload.code === 200) {
-      return _.assign({}, state, {
-        isLogin: true,
-        loginCode: 200,
-        userStatus: action.payload,
-      });
+  [AT.LOGIN.pending]: (state, action) => _.assign({}, state, {
+    latestLoginActionId: action.payload,
+  }),
+
+  [AT.LOGIN.success]: (state, action) => {
+    if (action.payload.actionId !== state.latestLoginActionId) {
+      return state;
     }
-    // else
+    // if latest request
     return _.assign({}, state, {
-      isLogin: false,
-      loginCode: action.payload.code,
-      userStatus: null,
+      latestLoginActionId: null,
     });
   },
 
