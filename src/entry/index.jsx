@@ -21,7 +21,23 @@ import {
   NotFound,
   Assignments,
   Auth,
+  Admin,
 } from '../modules';
+
+const Validation = Auth.Validation;
+
+const AuthRoute = ({ component: Component, allowedRoles, ...rest }) => (
+  <Route {...rest}>
+    <Validation allowedRoles={allowedRoles}>
+      <Component />
+    </Validation>
+  </Route>
+);
+
+AuthRoute.propTypes = {
+  component: React.PropTypes.func.isRequired,
+  allowedRoles: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+};
 
 /**
  * Debug only
@@ -35,8 +51,19 @@ const main = async () => {
     <Provider store={store}>
       <AppRouter>
         <Switch>
-          <Route path="/assignments" exact component={Assignments} />
+          <AuthRoute
+            path="/assignments"
+            exact
+            allowedRoles={['admin', 'ta', 'student']}
+            component={Assignments}
+          />
           <Route path="/login" exact component={Login} />
+          <AuthRoute
+            path="/admin"
+            exact
+            allowedRoles={['admin', 'ta']}
+            component={Admin}
+          />
           <Route path="/auth" component={Auth} />
           <Redirect exact from="/" to="/auth" />
           <Route component={NotFound} />

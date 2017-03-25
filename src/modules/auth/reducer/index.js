@@ -22,7 +22,7 @@ const handleDispatches = {
       return _.assign({}, state, {
         isLogin: true,
         loginCode: 200,
-        userStatus: action.payload,
+        userStatus: action.payload.data,
       });
     }
     // else

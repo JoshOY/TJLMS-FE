@@ -33,6 +33,9 @@ class LoginModule extends React.Component {
   }
 
   componentDidMount() {
+    if (this.props.userStatus) {
+      return null;
+    }
     const asyncFn = async (self) => {
       await self.props.fetchUserStatus();
     };
@@ -42,7 +45,7 @@ class LoginModule extends React.Component {
   render() {
     if (this.props.userStatus) {
       return (
-        <Redirect to="/assignments" />
+        <Redirect to="/auth" />
       );
     }
     return (

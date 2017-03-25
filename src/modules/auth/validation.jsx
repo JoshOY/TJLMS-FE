@@ -1,14 +1,18 @@
 import React, { PropTypes as P } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import _ from 'lodash';
 
 import Actions from './actions';
-import Validation from './validation';
 
-class LoginModule extends React.Component {
+class Validation extends React.Component {
 
   static propTypes = {
-    loginCode: P.number.isRequired,
+    // from external
+    children: P.node.isRequired,
+    allowedRoles: P.arrayOf(P.string),
+    // from redux store
+    loginCode: P.number,
     userStatus: P.shape({
       realname: P.string,
       role: P.string,
@@ -18,10 +22,10 @@ class LoginModule extends React.Component {
   };
 
   static defaultProps = {
+    loginCode: 0,
+    allowedRoles: [],
     userStatus: null,
   };
-
-  static Validation = Validation;
 
   constructor(props) {
     super(props);
@@ -45,29 +49,21 @@ class LoginModule extends React.Component {
         <Redirect to="/login" />
       );
     } else if (loginCode && (loginCode === 200)) {
-      switch (userStatus.role) {
-      case 'student':
-        return (<Redirect to="/assignments" />);
-      case 'admin':
-      case 'ta':
-        return (<Redirect to="/admin" />);
-      default:
-        return (<Redirect to="/login" />);
+      if (_.includes(this.props.allowedRoles, userStatus.role)) {
+        return (this.props.children);
       }
     }
     return (
-      <div className="app-module auth">
-        <h1 className="text-align-center p-t-lg">Loading...</h1>
+      <div>
+        <h1 className="text-align-center">Loading...</h1>
       </div>
     );
   }
-
 }
 
 const mapStateToProps = (state) => {
   const subState = state.auth;
   return {
-    // from redux store
     loginCode: subState.loginCode,
     userStatus: subState.userStatus,
   };
@@ -81,4 +77,4 @@ const mapDispatchesToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchesToProps,
-)(LoginModule);
+)(Validation);

@@ -40,7 +40,7 @@ export default class Actions {
         // else if success
         const reducerState = getState().login;
         if (reducerState.latestLoginActionId !== actionId) {
-          console.log('reducerState.latestLoginActionId =', reducerState.latestLoginActionId);
+          // console.log('reducerState.latestLoginActionId =', reducerState.latestLoginActionId);
           return null;
         }
         dispatch({
