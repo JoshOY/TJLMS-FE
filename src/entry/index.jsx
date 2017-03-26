@@ -26,26 +26,38 @@ import {
 
 const Validation = Auth.Validation;
 
-const AuthRoute = ({ component: Component, computedMatch, allowedRoles, children, ...rest }) => (
-  <Route computedMatch={computedMatch} {...rest}>
-    <Validation match={computedMatch} allowedRoles={allowedRoles}>
-      <Component match={computedMatch}>
-        {children}
-      </Component>
-    </Validation>
-  </Route>
-);
+const AuthRoute = ({
+    component: Component,
+    computedMatch,
+    location,
+    path,
+    allowedRoles,
+    children,
+    ...rest
+  }) => (
+    <Route computedMatch={computedMatch} {...rest}>
+      <Validation match={computedMatch} allowedRoles={allowedRoles} location={location} path={path}>
+        <Component match={computedMatch} location={location} path={path}>
+          {children}
+        </Component>
+      </Validation>
+    </Route>
+  );
 
 AuthRoute.propTypes = {
   component: React.PropTypes.func.isRequired,
   allowedRoles: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
   children: React.PropTypes.node,
   computedMatch: React.PropTypes.any,
+  location: React.PropTypes.any,
+  path: React.PropTypes.any,
 };
 
 AuthRoute.defaultProps = {
   children: [],
   computedMatch: undefined,
+  location: undefined,
+  path: undefined,
 };
 
 /**
@@ -76,11 +88,21 @@ const main = async () => {
             allowedRoles={['admin', 'ta']}
             component={Admin}
           >
-            <Route
-              path="/admin/:assignmentId"
-              exact
-              component={() => <div>Child</div>}
-            />
+            <Switch>
+              <Route
+                path="/admin/"
+                exact
+                component={() => null}
+              />
+              <Route
+                path="/admin/:assignmentId"
+                exact
+                component={() => <div>Child</div>}
+              />
+              <Route
+                component={() => <Redirect to="/404" />}
+              />
+            </Switch>
           </AuthRoute>
           <Route path="/auth" component={Auth} />
           <Redirect exact from="/" to="/auth" />
