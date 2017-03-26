@@ -12,6 +12,7 @@ import { routerReducer } from 'react-router-redux';
  */
 import authReducer from './auth/reducer';
 import loginReducer from './login/reducer';
+import adminReducer from './admin/reducer';
 
 /**
  * Combine reducers
@@ -20,6 +21,7 @@ const RootReducer = combineReducers({
   routing: routerReducer,
   auth: authReducer,
   login: loginReducer,
+  admin: adminReducer,
 });
 
 export default RootReducer;
