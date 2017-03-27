@@ -24,6 +24,8 @@ import {
   Admin,
 } from '../modules';
 
+const { AssignmentManagement } = Admin;
+
 const Validation = Auth.Validation;
 
 const AuthRoute = ({
@@ -97,7 +99,7 @@ const main = async () => {
               <Route
                 path="/admin/:assignmentId"
                 exact
-                component={() => <div>Child</div>}
+                component={AssignmentManagement}
               />
               <Route
                 component={() => <Redirect to="/404" />}

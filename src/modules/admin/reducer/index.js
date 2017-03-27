@@ -6,12 +6,20 @@
 
 import _ from 'lodash';
 
+import Assignment from 'src/datamodels/assignment';
 import { AT } from '../actions';
 
 const initState = {
   asyncActionIdsInObserve: [],
+  // admin - assignment list
   assignmentList: [],
   assignmentListIsLoading: true,
+  // admin manage single assignment
+  manageAssignmentObj: null,
+  // create problem related
+  creatingProblemTotalQuestionNum: 1,
+  creatingProblemText: '',
+  creatingProblemQuestionTexts: [''],
 };
 
 const handleDispatches = {
@@ -23,6 +31,25 @@ const handleDispatches = {
     return _.assign({}, state, {
       assignmentListIsLoading: false,
       assignmentList: resp.data,
+    });
+  },
+  [AT.MANAGE_ASSIGNMENT.success]: (state, action) => {
+    const data = action.payload;
+    return _.assign({}, state, {
+      manageAssignmentObj: new Assignment(data),
+    });
+  },
+  [AT.INIT_PROBLEM_CREATOR]: state => _.assign({}, state, {
+    creatingProblemTotalQuestionNum: 1,
+    creatingProblemText: '',
+    creatingProblemQuestionTexts: [''],
+  }),
+  [AT.UPDATE_PROBLEM_CREATOR]: (state, action) => {
+    const { qNum, pText, qTexts } = action.payload;
+    return _.assign({}, state, {
+      creatingProblemTotalQuestionNum: qNum,
+      creatingProblemText: pText,
+      creatingProblemQuestionTexts: qTexts,
     });
   },
 };

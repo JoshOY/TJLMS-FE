@@ -1,5 +1,6 @@
 import React, { PropTypes as P } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import moment from 'moment';
 import _ from 'lodash';
 import { Input, DatePicker, Switch, Icon, Button } from 'antd';
@@ -7,6 +8,7 @@ import { Input, DatePicker, Switch, Icon, Button } from 'antd';
 import './styles/index.sass';
 
 import Actions from './actions';
+import AssignmentManagement from './submodules/assignment-management';
 
 const RangePicker = DatePicker.RangePicker;
 
@@ -14,6 +16,7 @@ class AdminModule extends React.Component {
 
   static propTypes = {
     dispatch: P.func.isRequired,
+    match: P.object.isRequired,
     // match: P.object.isRequired,
     userStatus: P.shape({
       realname: P.string,
@@ -32,6 +35,8 @@ class AdminModule extends React.Component {
     assignmentList: [],
     children: [],
   };
+
+  static AssignmentManagement = AssignmentManagement;
 
   constructor(props) {
     super(props);
@@ -98,7 +103,8 @@ class AdminModule extends React.Component {
     return (
       _.map(this.props.assignmentList, assignmentObj => (
         <li key={assignmentObj.id}>
-          {assignmentObj.name} ({assignmentObj.id})
+          <Link to={`${this.props.match.path}/${assignmentObj.id}`}>{assignmentObj.name}</Link>
+          <span>({assignmentObj.id})</span>
         </li>
       ))
     );
@@ -164,7 +170,7 @@ class AdminModule extends React.Component {
             </div>
           </div>
           {/* Manage assignment */}
-          <div>
+          <div className="m-t-md">
             <h2>Manage assignment</h2>
             <div className="admin__assignment-manage">
               {this.props.children}

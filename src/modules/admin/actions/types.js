@@ -13,4 +13,8 @@ const createAsyncActions = actionName => ({
 export default {
   FETCH_ASSIGNMENT_LIST: createAsyncActions('FETCH_ASSIGNMENT_LIST'),
   CREATE_ASSIGNMENT: createAsyncActions('CREATE_ASSIGNMENT'),
+  MANAGE_ASSIGNMENT: createAsyncActions('MANAGE_ASSIGNMENT'),
+  CREATE_PROBLEM: createAsyncActions('CREATE_PROBLEM'),
+  INIT_PROBLEM_CREATOR: wrapByNamespace('INIT_PROBLEM_CREATOR'),
+  UPDATE_PROBLEM_CREATOR: wrapByNamespace('UPDATE_PROBLEM_CREATOR'),
 };
