@@ -12,8 +12,8 @@ export default class Assignment {
   constructor(initObj) {
     this.id = initObj.id;
     this.name = initObj.name;
-    this.begin_at = initObj.begin_at;
-    this.end_at = initObj.end_at;
+    this.begin_at = initObj.begin_at * 1000;
+    this.end_at = initObj.end_at * 1000;
     this.problems = _.map(initObj.problems, p => new Problem(p)) || [];
   }
 

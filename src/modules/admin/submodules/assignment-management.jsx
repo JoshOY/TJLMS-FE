@@ -65,8 +65,12 @@ class AssignmentManagement extends React.Component {
       <div className="m-t-s admin-assignment-management">
         <h3>Name: {manageAssignmentObj ? manageAssignmentObj.name : ''}</h3>
         <p>Object ID: {manageAssignmentObj ? manageAssignmentObj.id : ''}</p>
-        <p>Begin at: {manageAssignmentObj ? manageAssignmentObj.begin_at : ''}</p>
-        <p>End at: {manageAssignmentObj ? manageAssignmentObj.end_at : ''}</p>
+        <p>Begin at: {manageAssignmentObj ?
+          manageAssignmentObj.getBeginAtMoment().format('YYYY-MM-DD HH:mm:ss') :
+          ''}</p>
+        <p>End at: {manageAssignmentObj ?
+          manageAssignmentObj.getEndAtMoment().format('YYYY-MM-DD HH:mm:ss') :
+          ''}</p>
         <div className="problem-items-container">
           {this.renderProblems(manageAssignmentObj ? manageAssignmentObj.problems : [])}
         </div>

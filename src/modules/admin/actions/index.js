@@ -36,12 +36,24 @@ export default class Actions {
       dispatch({
         type: AT.CREATE_ASSIGNMENT.pending,
       });
+      const beginAtTimestamp = beginAt
+        .hour(0)
+        .minute(0)
+        .second(0)
+        .toDate()
+        .getTime();
+      const endAtTimestamp = endAt
+        .hour(23)
+        .minute(59)
+        .second(59)
+        .toDate()
+        .getTime();
       const respObj = await ApiUtil.tokenPost(
         '/api/manage/create/assignment',
         {
           name,
-          begin_at: `${beginAt.format('YYYY-MM-DD')}T00:00:00`,
-          end_at: `${endAt.format('YYYY-MM-DD')}T23:59:59`,
+          begin_at: beginAtTimestamp / 1000, // Python format
+          end_at: endAtTimestamp / 1000, // Python format
           visible,
         },
       );
