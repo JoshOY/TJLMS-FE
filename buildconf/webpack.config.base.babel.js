@@ -82,18 +82,18 @@ export default function (env) {
           return module.context && module.context.indexOf('node_modules') !== -1;
         },
       }),
-      new webpack.LoaderOptionsPlugin({
-        options: {
-          context: prjRoot('.'),
-          postcss: [require('autoprefixer')],
-        },
-      }),
       new LodashModuleReplacementPlugin({
         collections: true,
         paths: true,
       }),
       extractProjectCSS,
       extractVendorCSS,
+      new webpack.LoaderOptionsPlugin({
+        options: {
+          context: prjRoot('.'),
+          postcss: [require('autoprefixer')],
+        },
+      }),
     ],
     /* END OF CONFIG */
   };

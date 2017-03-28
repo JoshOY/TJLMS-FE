@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint . --ignore-path ./.eslintignore",
     "watch": "webpack --config buildconf/webpack.config.dev.babel.js --progress --watch",
+    "build": "webpack --config buildconf/webpack.config.prod.babel.js --progress",
     "dev": "babel-node buildconf/devserver/devserver.js"
   },
   "repository": {

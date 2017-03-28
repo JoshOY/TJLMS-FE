@@ -61,10 +61,14 @@ export const jsLoader = () => ({
           'transform-runtime',
           'react-hot-loader/babel',
           'lodash',
-          ['import', {
-            libraryName: 'antd',
-            style: 'css',
-          }],
+          [
+            'import',
+            {
+              libraryName: 'antd',
+              libraryDirectory: 'lib',
+              style: 'css',
+            },
+          ],
         ],
       },
     },
