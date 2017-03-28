@@ -60,6 +60,7 @@ export const jsLoader = () => ({
           'transform-regenerator',
           'transform-runtime',
           'react-hot-loader/babel',
+          'lodash',
           ['import', {
             libraryName: 'antd',
             style: 'css',

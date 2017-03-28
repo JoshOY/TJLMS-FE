@@ -30,33 +30,32 @@ class QuestionTagsContainer extends React.Component {
         new QTag(`null-${renderingTagsArray.length}`, 'null'),
       );
     }
-    return _(renderingTagsArray)
-      .map((tag) => {
-        if (tag.state === 'null') {
-          return (
-            <QuestionTag key={hash(tag)} type="null" />
-          );
-        }
-        // else
+    const ret1 = _.map(renderingTagsArray, (tag) => {
+      if (tag.state === 'null') {
         return (
-          <QuestionTag key={hash(tag)} type={tag.state}>
-            {tag.title}
-          </QuestionTag>
+          <QuestionTag key={hash(tag)} type="null" />
         );
-      })
-      .chunk(numEachRow)
-      .map((chunkedNodes, idx) => {
-        const keyStr = `question-tag-row-${idx}`;
-        return (
-          <div
-            className="disp-table-row assignments-question-tags-container__row"
-            key={keyStr}
-          >
-            {chunkedNodes}
-          </div>
-        );
-      })
-      .value();
+      }
+      // else
+      return (
+        <QuestionTag key={hash(tag)} type={tag.state}>
+          {tag.title}
+        </QuestionTag>
+      );
+    });
+    const ret2 = _.chunk(ret1, numEachRow);
+    const ret3 = _.map(ret2, (chunkedNodes, idx) => {
+      const keyStr = `question-tag-row-${idx}`;
+      return (
+        <div
+          className="disp-table-row assignments-question-tags-container__row"
+          key={keyStr}
+        >
+          {chunkedNodes}
+        </div>
+      );
+    });
+    return ret3;
   };
 
   render() {

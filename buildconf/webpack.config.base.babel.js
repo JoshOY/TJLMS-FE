@@ -1,6 +1,7 @@
 import path from 'path';
 import webpack from 'webpack';
 import HtmlPlugin from 'html-webpack-plugin';
+import LodashModuleReplacementPlugin from 'lodash-webpack-plugin';
 
 import {
   jsLoader,
@@ -86,6 +87,10 @@ export default function (env) {
           context: prjRoot('.'),
           postcss: [require('autoprefixer')],
         },
+      }),
+      new LodashModuleReplacementPlugin({
+        collections: true,
+        paths: true,
       }),
       extractProjectCSS,
       extractVendorCSS,

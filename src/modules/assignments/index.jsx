@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import _ from 'lodash';
+// import _ from 'lodash';
 import ReactMarkdown from 'react-markdown';
 import { Button } from 'antd';
 
@@ -25,7 +25,7 @@ import CodeRenderer from '../../common/components/code-renderer';
 // mock data
 import mockDemoQuestionMarkdown from '../../common/mockdata/demo-question-markdown';
 
-const mockTags = _([
+const mockTags = [
   new QTag('P1', 'current'),
   new QTag('P2', 'default'),
   new QTag('P3', 'halfAnswered'),
@@ -38,7 +38,7 @@ const mockTags = _([
   new QTag('P10', 'default'),
   new QTag('P11', 'default'),
   new QTag('P12', 'default'),
-]).value();
+];
 
 
 class AssignmentsModule extends React.Component {
