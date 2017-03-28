@@ -14,12 +14,14 @@ const initState = {
   // admin - assignment list
   assignmentList: [],
   assignmentListIsLoading: true,
-  // admin manage single assignment
-  manageAssignmentObj: null,
   // create problem related
   creatingProblemTotalQuestionNum: 1,
   creatingProblemText: '',
   creatingProblemQuestionTexts: [''],
+  // editing assignment related
+  manageAssignmentObj: null,
+  // editing problem related
+  editingProblem: null,
 };
 
 const handleDispatches = {
@@ -50,6 +52,18 @@ const handleDispatches = {
       creatingProblemTotalQuestionNum: qNum,
       creatingProblemText: pText,
       creatingProblemQuestionTexts: qTexts,
+    });
+  },
+  [AT.LOAD_EDITING_PROBLEM]: (state, action) => {
+    const newEditingProblem = action.payload;
+    return _.assign({}, state, {
+      editingProblem: newEditingProblem,
+    });
+  },
+  [AT.UPDATE_EDITING_PROBLEM]: (state, action) => {
+    const newEditingProblemState = action.payload;
+    return _.assign({}, state, {
+      editingProblem: newEditingProblemState,
     });
   },
 };

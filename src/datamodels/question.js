@@ -9,7 +9,7 @@ export default class Question {
    * @param initObj
    */
   constructor(initObj) {
-    this.id = initObj.id;
+    this._id = initObj._id;
     this.text = initObj.text;
   }
 

@@ -3,6 +3,7 @@
  */
 
 import { message } from 'antd';
+import _ from 'lodash';
 import ApiUtil from 'src/utils/api-util';
 import ActionTypes from './types';
 
@@ -52,8 +53,8 @@ export default class Actions {
         '/api/manage/create/assignment',
         {
           name,
-          begin_at: beginAtTimestamp / 1000, // Python format
-          end_at: endAtTimestamp / 1000, // Python format
+          begin_at: beginAtTimestamp, // Python format
+          end_at: endAtTimestamp, // Python format
           visible,
         },
       );
@@ -148,4 +149,43 @@ export default class Actions {
       qTexts,
     },
   });
+
+  static loadEditingProblem = problemId => (dispatch, getState) => {
+    const managingAssignment = getState().admin.manageAssignmentObj;
+    const editingProblem = _.find(managingAssignment.problems, p => (p._id === problemId));
+    dispatch({
+      type: AT.LOAD_EDITING_PROBLEM,
+      payload: _.cloneDeep(editingProblem),
+    });
+    return Promise.resolve();
+  };
+
+  static updateEditingProblem = newEditingProblemState => ({
+    type: AT.UPDATE_EDITING_PROBLEM,
+    payload: newEditingProblemState,
+  });
+
+  static saveChangesOfEditingProblemAsync = problem => (dispatch) => {
+    const asyncFn = async () => {
+      dispatch({
+        type: AT.SAVE_EDITING_PROBLEM_CHANGES.pending,
+      });
+      const respObj = await ApiUtil.tokenPost(
+        `/api/manage/update/problem/${problem._id}/content`,
+        problem.getUpdateObject(),
+      );
+      if (respObj.code !== 200) {
+        message.error(respObj.msg);
+        return Promise.reject();
+      }
+      // if success
+      message.success('Save changes complete.');
+      dispatch({
+        type: AT.SAVE_EDITING_PROBLEM_CHANGES.success,
+        payload: respObj,
+      });
+      return Promise.resolve();
+    };
+    return asyncFn();
+  };
 }

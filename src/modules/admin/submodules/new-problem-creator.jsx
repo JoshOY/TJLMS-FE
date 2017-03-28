@@ -117,6 +117,7 @@ class NewProblemCreator extends React.Component {
     } = this.props;
     return (
       <div className="m-t-s new-problem-creator">
+        <h3 className="m-b-s">Create a new problem</h3>
         <h4>Problem text (markdown):</h4>
         <Input
           type="textarea"

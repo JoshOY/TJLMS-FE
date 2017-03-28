@@ -98,7 +98,6 @@ const main = async () => {
               />
               <Route
                 path="/admin/:assignmentId"
-                exact
                 component={AssignmentManagement}
               />
               <Route

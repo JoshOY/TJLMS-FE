@@ -102,9 +102,9 @@ class AdminModule extends React.Component {
     }
     return (
       _.map(this.props.assignmentList, assignmentObj => (
-        <li key={assignmentObj.id}>
-          <Link to={`${this.props.match.path}/${assignmentObj.id}`}>{assignmentObj.name}</Link>
-          <span>({assignmentObj.id})</span>
+        <li key={assignmentObj._id}>
+          <Link to={`${this.props.match.path}/${assignmentObj._id}`}>{assignmentObj.name}</Link>
+          <span>({assignmentObj._id})</span>
         </li>
       ))
     );

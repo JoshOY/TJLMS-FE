@@ -67,3 +67,5 @@ rules:
     - off
   object-shorthand:
     - off
+  no-underscore-dangle:
+    - off
