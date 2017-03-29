@@ -1,6 +1,5 @@
 import React, { PropTypes as P } from 'react';
 import _ from 'lodash';
-import hash from 'object-hash';
 
 import QTag from 'src/datamodels/qtag';
 import QuestionTag from './question-tag';
@@ -30,15 +29,15 @@ class QuestionTagsContainer extends React.Component {
         new QTag(`null-${renderingTagsArray.length}`, 'null'),
       );
     }
-    const ret1 = _.map(renderingTagsArray, (tag) => {
+    const ret1 = _.map(renderingTagsArray, (tag, idx) => {
       if (tag.state === 'null') {
         return (
-          <QuestionTag key={hash(tag)} type="null" />
+          <QuestionTag key={`${idx}-null`} type="null" />
         );
       }
       // else
       return (
-        <QuestionTag key={hash(tag)} type={tag.state}>
+        <QuestionTag key={`${idx}-${tag.title}`} type={tag.state}>
           {tag.title}
         </QuestionTag>
       );

@@ -4,7 +4,10 @@
 
 import path from 'path';
 import webpack from 'webpack';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import baseConfigFn from './webpack.config.base.babel';
+
+const enableBundleAnalyzer = true;
 
 const config = baseConfigFn('production');
 const prjRoot = p => path.resolve(__dirname, '../', p);
@@ -21,5 +24,8 @@ config.plugins.push(new webpack.LoaderOptionsPlugin({
     postcss: [require('autoprefixer')],
   },
 }));
+if (enableBundleAnalyzer) {
+  config.plugins.push(new BundleAnalyzerPlugin());
+}
 
 export default config;

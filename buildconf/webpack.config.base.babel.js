@@ -88,6 +88,8 @@ export default function (env) {
       }),
       extractProjectCSS,
       extractVendorCSS,
+      // Ignore all locale files of moment.js
+      new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       new webpack.LoaderOptionsPlugin({
         options: {
           context: prjRoot('.'),

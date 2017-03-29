@@ -3,7 +3,6 @@
  */
 
 import { message } from 'antd';
-import randomString from 'randomstring';
 import ApiUtil from 'src/utils/api-util';
 
 import ActionTypes from './types';
@@ -20,7 +19,7 @@ export default class Actions {
   static login({ username, password }) {
     return (dispatch, getState) => {
       const asyncFn = async () => {
-        const actionId = randomString.generate(15);
+        const actionId = (new Date()).getTime().toString();
         // on start
         dispatch({
           type: AT.LOGIN.pending,
