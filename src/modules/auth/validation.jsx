@@ -52,6 +52,7 @@ class Validation extends React.Component {
       if (_.includes(this.props.allowedRoles, userStatus.role)) {
         return (this.props.children);
       }
+      return (<Redirect to="/" />);
     }
     return (
       <div>
