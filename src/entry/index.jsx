@@ -79,12 +79,26 @@ const main = async () => {
             exact
             component={Login}
           />
+          {/* Assignments */}
           <AuthRoute
             path="/assignments"
             exact
             allowedRoles={['admin', 'ta', 'student']}
             component={Assignments}
           />
+          <AuthRoute
+            path="/assignments/:assignmentId"
+            exact
+            allowedRoles={['admin', 'ta', 'student']}
+            component={Assignments}
+          />
+          <AuthRoute
+            path="/assignments/:assignmentId/:problemId"
+            exact
+            allowedRoles={['admin', 'ta', 'student']}
+            component={Assignments}
+          />
+          {/* Admin */}
           <AuthRoute
             path="/admin"
             allowedRoles={['admin', 'ta']}

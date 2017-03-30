@@ -116,6 +116,7 @@ export default class Actions {
           order,
           ptext,
           qtexts,
+          visible: true,
         },
       );
       if (respObj.code === 200) {

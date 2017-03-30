@@ -1,19 +1,22 @@
 import React, { PropTypes as P } from 'react';
+import { Link } from 'react-router-dom';
 import _ from 'lodash';
 
-import QTag from 'src/datamodels/qtag';
-import QuestionTag from './question-tag';
+import Problem from 'src/datamodels/problem';
+import ProblemTag from './problem-tag';
 
 class QuestionTagsContainer extends React.Component {
 
   static propTypes = {
-    tags: P.arrayOf(P.instanceOf(QTag)),
+    tags: P.arrayOf(P.instanceOf(Problem)),
     numEachRow: P.number,
+    assignmentId: P.string,
   };
 
   static defaultProps = {
     tags: [],
     numEachRow: 10,
+    assignmentId: '',
   };
 
   constructor(props) {
@@ -26,20 +29,23 @@ class QuestionTagsContainer extends React.Component {
     const renderingTagsArray = _.cloneDeep(tags);
     while (renderingTagsArray.length < (rowNum * numEachRow)) {
       renderingTagsArray.push(
-        new QTag(`null-${renderingTagsArray.length}`, 'null'),
+        new Problem({
+          type: 'null',
+        }),
       );
     }
-    const ret1 = _.map(renderingTagsArray, (tag, idx) => {
-      if (tag.state === 'null') {
+    // console.log(renderingTagsArray);
+    const ret1 = _.map(renderingTagsArray, (question, idx) => {
+      if (question.type === 'null') {
         return (
-          <QuestionTag key={`${idx}-null`} type="null" />
+          <ProblemTag key={`${idx}-null`} type="null" />
         );
       }
       // else
       return (
-        <QuestionTag key={`${idx}-${tag.title}`} type={tag.state}>
-          {tag.title}
-        </QuestionTag>
+        <ProblemTag key={`${idx}-${question._id}`} type={question.type}>
+          <Link to={`/assignments/${this.props.assignmentId}/${question._id}`}>{`P${idx + 1}`}</Link>
+        </ProblemTag>
       );
     });
     const ret2 = _.chunk(ret1, numEachRow);

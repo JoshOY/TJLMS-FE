@@ -1,7 +1,7 @@
 import React, { PropTypes as P } from 'react';
 import classNames from 'classnames';
 
-class QuestionTag extends React.Component {
+class ProblemTag extends React.Component {
 
   static propTypes = {
     children: P.node,
@@ -52,4 +52,4 @@ class QuestionTag extends React.Component {
 
 }
 
-export default QuestionTag;
+export default ProblemTag;

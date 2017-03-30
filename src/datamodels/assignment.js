@@ -16,6 +16,7 @@ export default class Assignment {
     this.end_at = initObj.end_at;
     this.problems = _.map(initObj.problems, p => new Problem(p)) || [];
     this.visible = initObj.visible;
+    this.submissions = initObj.submissions;
   }
 
   getBeginAtMoment() {

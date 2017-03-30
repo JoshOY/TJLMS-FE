@@ -17,6 +17,7 @@ export default class Problem {
     this.order = initObj.order;
     this.text = initObj.text;
     this.questions = _.map(initObj.questions, q => new Question(q));
+    this.type = initObj.type || 'default';
   }
 
   setText(newText) {

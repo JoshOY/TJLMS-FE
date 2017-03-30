@@ -1,18 +1,39 @@
-import React from 'react';
+import React, { PropTypes as P } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Menu } from 'antd';
+import _ from 'lodash';
+import Assignment from 'src/datamodels/assignment';
 
 const SubMenu = Menu.SubMenu;
 const MenuItem = Menu.Item;
 
 class AssignmentsAside extends React.Component {
 
-  static propTypes = {};
+  static propTypes = {
+    // match: P.object.isRequired,
+    assignmentList: P.arrayOf(P.instanceOf(Assignment)),
+  };
+
+  static defaultProps = {
+    assignmentList: [],
+  };
 
   constructor(props) {
     super(props);
     this.state = {};
   }
+
+  renderAssignmentMenuItems = () => {
+    const { assignmentList } = this.props;
+    return _.map(assignmentList, assignmentObj => (
+      <MenuItem key={assignmentObj._id}>
+        <Link to={`/assignments/${assignmentObj._id}`} key={assignmentObj._id}>
+          {assignmentObj.name}
+        </Link>
+      </MenuItem>
+    ));
+  };
 
   render() {
     return (
@@ -27,15 +48,7 @@ class AssignmentsAside extends React.Component {
             key="assignments"
             title={<span>Assignments</span>}
           >
-            <MenuItem key="a1">
-              Assignment 1
-            </MenuItem>
-            <MenuItem key="a2">
-              Assignment 2
-            </MenuItem>
-            <MenuItem key="a3">
-              Assignment 3
-            </MenuItem>
+            {this.renderAssignmentMenuItems()}
           </SubMenu>
           <MenuItem key="logout">
             Logout
@@ -47,7 +60,9 @@ class AssignmentsAside extends React.Component {
 
 }
 
-const mapStateToProps = () => ({});
+const mapStateToProps = state => ({
+  assignmentList: state.assignments.assignmentList,
+});
 
 const mapDispatchesToProps = dispatch => ({
   dispatch,

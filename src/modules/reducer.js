@@ -13,6 +13,7 @@ import { routerReducer } from 'react-router-redux';
 import authReducer from './auth/reducer';
 import loginReducer from './login/reducer';
 import adminReducer from './admin/reducer';
+import assignmentsReducer from './assignments/reducer';
 
 /**
  * Combine reducers
@@ -22,6 +23,7 @@ const RootReducer = combineReducers({
   auth: authReducer,
   login: loginReducer,
   admin: adminReducer,
+  assignments: assignmentsReducer,
 });
 
 export default RootReducer;
