@@ -34,7 +34,6 @@ class QuestionTagsContainer extends React.Component {
         }),
       );
     }
-    // console.log(renderingTagsArray);
     const ret1 = _.map(renderingTagsArray, (question, idx) => {
       if (question.type === 'null') {
         return (

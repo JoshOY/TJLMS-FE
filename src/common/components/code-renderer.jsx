@@ -1,10 +1,7 @@
 import React, { PropTypes as P } from 'react';
 import Lowlight from 'react-lowlight';
-// import shallowCompare from 'react-addons-shallow-compare';
-// import js from 'highlight.js/lib/languages/javascript';
 import cpp from 'highlight.js/lib/languages/cpp';
 
-// Lowlight.registerLanguage('js', js);
 Lowlight.registerLanguage('cpp', cpp);
 
 class CodeBlock extends React.PureComponent {
@@ -19,7 +16,7 @@ class CodeBlock extends React.PureComponent {
 
   static defaultProps = {
     literal: '',
-    language: 'js',
+    language: 'cpp',
     inline: false,
   };
 
@@ -33,7 +30,7 @@ class CodeBlock extends React.PureComponent {
   render() {
     return (
       <Lowlight
-        language={this.props.language || 'js'}
+        language={this.props.language || 'cpp'}
         value={this.props.literal}
         inline={this.props.inline}
       />

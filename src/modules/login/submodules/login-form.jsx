@@ -42,8 +42,6 @@ class LoginForm extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        // eslint-disable-next-line no-console
-        console.log('Received values of form: ', values);
         this.props.dispatch(LoginActions.login(values));
       }
     });

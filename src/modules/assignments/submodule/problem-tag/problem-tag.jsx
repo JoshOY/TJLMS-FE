@@ -1,4 +1,5 @@
 import React, { PropTypes as P } from 'react';
+// import { connect } from 'react-redux';
 import classNames from 'classnames';
 
 class ProblemTag extends React.Component {

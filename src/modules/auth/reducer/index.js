@@ -33,6 +33,12 @@ const handleDispatches = {
     });
   },
 
+  [AT.LOGOUT.success]: state => _.assign({}, state, {
+    isLogin: false,
+    loginCode: 401,
+    userStatus: null,
+  }),
+
 };
 
 /**

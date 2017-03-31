@@ -3,7 +3,7 @@
  */
 
 import { message } from 'antd';
-// import _ from 'lodash';
+import _ from 'lodash';
 import ApiUtil from 'src/utils/api-util';
 import ActionTypes from './types';
 
@@ -26,7 +26,7 @@ export default class Actions {
     return asyncFn();
   };
 
-  static fetchAssignmentDetailAsync = assignmentId => (dispatch) => {
+  static fetchAssignmentDetailAsync = (assignmentId, problemId) => (dispatch) => {
     const asyncFn = async () => {
       dispatch({
         type: AT.FETCH_ASSIGNMENT_DETAIL.pending,
@@ -40,9 +40,66 @@ export default class Actions {
         type: AT.FETCH_ASSIGNMENT_DETAIL.success,
         payload: respObj,
       });
-      return Promise.resolve();
+      if (problemId) {
+        dispatch(Actions.setCurrentProblem(
+          _.find(
+            respObj.data.problems,
+            q => (q._id === problemId),
+          ),
+        ));
+      }
+      return respObj;
     };
     return asyncFn();
   };
 
+  static setCurrentProblem = problem => (dispatch) => {
+    dispatch({
+      type: AT.SET_CURRENT_PROBLEM,
+      payload: problem,
+    });
+    return Promise.resolve();
+  };
+
+  static changeAnswerValue = (answerIdx, newValue) => (dispatch) => {
+    dispatch({
+      type: AT.CHANGE_ANSWER_VALUE,
+      payload: {
+        answerIdx,
+        newValue,
+      },
+    });
+    return Promise.resolve();
+  };
+
+  static submitAnswersAsync = () => (dispatch, getState) => {
+    const state = getState().assignments;
+    const asyncFn = async () => {
+      dispatch({
+        type: AT.SUBMIT_ANSWERS.pending,
+      });
+      const respObj = await ApiUtil.tokenPost(
+        `/api/assignment/${state.currentAssignment._id}/${state.currentProblem._id}`,
+        {
+          answers: state.currentAnswers,
+        },
+      );
+      if (respObj.code === 200) {
+        // console.log(respObj);
+        message.success('Answers saved.');
+        dispatch({
+          type: AT.SUBMIT_ANSWERS.success,
+          payload: respObj,
+        });
+      } else {
+        message.error(respObj.reason);
+        dispatch({
+          type: AT.SUBMIT_ANSWERS.failed,
+          payload: respObj,
+        });
+      }
+      return respObj;
+    };
+    return asyncFn();
+  };
 }

@@ -5,6 +5,8 @@ import { Menu } from 'antd';
 import _ from 'lodash';
 import Assignment from 'src/datamodels/assignment';
 
+import AuthActions from '../../auth/actions';
+
 const SubMenu = Menu.SubMenu;
 const MenuItem = Menu.Item;
 
@@ -12,11 +14,14 @@ class AssignmentsAside extends React.Component {
 
   static propTypes = {
     // match: P.object.isRequired,
+    dispatch: P.func.isRequired,
     assignmentList: P.arrayOf(P.instanceOf(Assignment)),
+    currentAssignment: P.instanceOf(Assignment),
   };
 
   static defaultProps = {
     assignmentList: [],
+    currentAssignment: null,
   };
 
   constructor(props) {
@@ -43,6 +48,14 @@ class AssignmentsAside extends React.Component {
           defaultOpenKeys={['assignments']}
           theme="dark"
           mode="inline"
+          selectedKeys={[
+            (this.props.currentAssignment ? this.props.currentAssignment._id : ''),
+          ]}
+          onSelect={({ key }) => {
+            if (key === 'logout') {
+              this.props.dispatch(AuthActions.logoutAsync());
+            }
+          }}
         >
           <SubMenu
             key="assignments"
@@ -62,6 +75,7 @@ class AssignmentsAside extends React.Component {
 
 const mapStateToProps = state => ({
   assignmentList: state.assignments.assignmentList,
+  currentAssignment: state.assignments.currentAssignment,
 });
 
 const mapDispatchesToProps = dispatch => ({

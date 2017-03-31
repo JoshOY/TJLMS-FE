@@ -4,6 +4,7 @@
 
 import _ from 'lodash';
 import Assignment from 'src/datamodels/assignment';
+import Problem from 'src/datamodels/problem';
 import { AT } from '../actions';
 
 const initState = {
@@ -11,6 +12,9 @@ const initState = {
   assignmentListIsLoading: true,
   assignmentsList: [],
   currentAssignment: null,
+  currentProblem: null,
+  currentAnswers: [],
+  currentAnswersIsDirty: false,
 };
 
 const handleDispatches = {
@@ -25,12 +29,76 @@ const handleDispatches = {
       assignmentList: _.map(resp.data, obj => new Assignment(obj)),
     });
   },
+
+  /* FETCH_ASSIGNMENT_DETAIL */
   [AT.FETCH_ASSIGNMENT_DETAIL.success]: (state, action) => {
     const currentAssignmentObj = action.payload.data;
     return _.assign({}, state, {
       currentAssignment: new Assignment(currentAssignmentObj),
     });
   },
+
+  /* SET_CURRENT_PROBLEM */
+  [AT.SET_CURRENT_PROBLEM]: (state, action) => {
+    if (!action.payload) {
+      return _.assign({}, state, {
+        currentProblem: null,
+        currentAnswers: [],
+      });
+    }
+    let newCurrentAnswersState = [];
+    if (!state.currentAssignment.submissions) {
+      newCurrentAnswersState = _.map(action.payload.questions, q => ({
+        question_id: q._id,
+        text: '',
+      }));
+    } else {
+      const allSubmissionAnswers = _.flow(
+        x => _.map(x, submission => submission.answers),
+        _.flattenDeep,
+      )(state.currentAssignment.submissions);
+      newCurrentAnswersState = _.map(
+        action.payload.questions,
+        (q) => {
+          const ans = _.find(
+            allSubmissionAnswers,
+            a => (a.question_id === q._id),
+          );
+          // console.log('Matched ans:', ans);
+          if (ans) {
+            return {
+              question_id: ans.question_id,
+              text: ans.text,
+            };
+          }
+          return {
+            question_id: q._id,
+            text: '',
+          };
+        },
+      );
+    }
+    return _.assign({}, state, {
+      currentProblem: new Problem(action.payload),
+      currentAnswers: newCurrentAnswersState,
+      currentAnswersIsDirty: false,
+    });
+  },
+
+  /* CHANGE_ANSWER_VALUE */
+  [AT.CHANGE_ANSWER_VALUE]: (state, action) => {
+    const {
+      answerIdx,
+      newValue,
+    } = action.payload;
+    const currentAnswersNewState = _.cloneDeep(state.currentAnswers);
+    currentAnswersNewState[answerIdx].text = newValue;
+    return _.assign({}, state, {
+      currentAnswers: currentAnswersNewState,
+      currentAnswersIsDirty: true,
+    });
+  },
+
 };
 
 /**

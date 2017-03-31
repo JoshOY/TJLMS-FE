@@ -32,4 +32,31 @@ export default class Actions {
     }
   };
 
+  static logoutAsync = () => (dispatch) => {
+    const asyncFn = async () => {
+      dispatch({
+        type: AT.LOGOUT.pending,
+      });
+      try {
+        const resp = await ApiUtil.tokenGet('/api/user/logout');
+        // console.log(resp);
+        if (resp.code === 200) {
+          return dispatch({
+            type: AT.LOGOUT.success,
+            payload: resp,
+          });
+        }
+        // else
+        throw new Error(resp.msg);
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error(err);
+        return {
+          type: AT.LOGOUT.failed,
+        };
+      }
+    };
+    return asyncFn();
+  };
+
 }

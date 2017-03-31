@@ -8,6 +8,7 @@ import { Input, DatePicker, Switch, Icon, Button } from 'antd';
 import './styles/index.sass';
 
 import Actions from './actions';
+import AuthActions from '../auth/actions';
 import AssignmentManagement from './submodules/assignment-management';
 
 const RangePicker = DatePicker.RangePicker;
@@ -65,6 +66,10 @@ class AdminModule extends React.Component {
     });
   };
 
+  onClickLogout = () => {
+    this.props.dispatch(AuthActions.logoutAsync());
+  };
+
   stateValueChg = {
     newAssignmentName: (ev) => {
       const newValue = ev.target.value;
@@ -115,7 +120,10 @@ class AdminModule extends React.Component {
     const { userStatus } = this.props;
     return (
       <div className="app-module relative full-size admin">
-        <h1 className="text-align-center">Welcome, { userStatus ? userStatus.username : '' }!</h1>
+        <h1 className="text-align-center">
+          <span>Welcome, { userStatus ? userStatus.username : '' }!&nbsp;</span>
+          <a onClick={this.onClickLogout}>Click here to logout</a>
+        </h1>
         <div className="admin-wrapper">
           <div className="admin__assignments">
             <h2>Assignments created</h2>

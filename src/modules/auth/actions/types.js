@@ -12,4 +12,5 @@ const createAsyncActions = actionName => ({
 
 export default {
   USER_STATUS: createAsyncActions('USER_STATUS'),
+  LOGOUT: createAsyncActions('LOGOUT'),
 };
