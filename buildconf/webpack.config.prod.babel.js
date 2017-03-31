@@ -7,7 +7,7 @@ import webpack from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import baseConfigFn from './webpack.config.base.babel';
 
-const enableBundleAnalyzer = true;
+const enableBundleAnalyzer = false;
 
 const config = baseConfigFn('production');
 const prjRoot = p => path.resolve(__dirname, '../', p);
