@@ -9,7 +9,7 @@ import Problem from './problem';
 
 export default class Assignment {
 
-  constructor(initObj) {
+  constructor(initObj, allSubmissionAnswers = []) {
     this._id = initObj._id;
     this.name = initObj.name;
     this.begin_at = initObj.begin_at;
@@ -17,6 +17,36 @@ export default class Assignment {
     this.problems = _.map(initObj.problems, p => new Problem(p)) || [];
     this.visible = initObj.visible;
     this.submissions = initObj.submissions;
+    /**
+     * Check complete status for each problem in this assignment
+     */
+    if (allSubmissionAnswers && allSubmissionAnswers.length) {
+      _.forEach(this.problems, (p) => {
+        _.forEach(p.questions, (q) => {
+          const targetAnswer = _.find(
+            allSubmissionAnswers,
+            answer => answer.question_id === q._id,
+          );
+          if (targetAnswer && targetAnswer.text) {
+            _.assign(q, {
+              completedTag: true,
+            });
+          }
+        });
+        const isCompletedPartial = !!(_.find(p.questions, q => q.completedTag === true));
+        const isCompletedFull = !(_.find(p.questions, q => q.completedTag === false));
+        if (isCompletedPartial) {
+          _.assign(p, {
+            type: 'halfAnswered',
+          });
+        }
+        if (isCompletedFull) {
+          _.assign(p, {
+            type: 'answered',
+          });
+        }
+      });
+    }
   }
 
   getBeginAtMoment() {

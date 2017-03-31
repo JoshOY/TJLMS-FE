@@ -11,12 +11,14 @@ class QuestionTagsContainer extends React.Component {
     tags: P.arrayOf(P.instanceOf(Problem)),
     numEachRow: P.number,
     assignmentId: P.string,
+    problemId: P.string,
   };
 
   static defaultProps = {
     tags: [],
     numEachRow: 10,
     assignmentId: '',
+    problemId: '',
   };
 
   constructor(props) {
@@ -34,16 +36,23 @@ class QuestionTagsContainer extends React.Component {
         }),
       );
     }
-    const ret1 = _.map(renderingTagsArray, (question, idx) => {
-      if (question.type === 'null') {
+    const ret1 = _.map(renderingTagsArray, (problem, idx) => {
+      if (problem.type === 'null') {
         return (
           <ProblemTag key={`${idx}-null`} type="null" />
         );
       }
       // else
+      let type = problem.type;
+      if (this.props.problemId && (this.props.problemId === problem._id)) {
+        type = 'current';
+      }
       return (
-        <ProblemTag key={`${idx}-${question._id}`} type={question.type}>
-          <Link to={`/assignments/${this.props.assignmentId}/${question._id}`}>{`P${idx + 1}`}</Link>
+        <ProblemTag
+          key={`${idx}-${problem._id}`}
+          type={type}
+        >
+          <Link to={`/assignments/${this.props.assignmentId}/${problem._id}`}>{`P${idx + 1}`}</Link>
         </ProblemTag>
       );
     });

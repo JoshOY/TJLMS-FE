@@ -33,8 +33,12 @@ const handleDispatches = {
   /* FETCH_ASSIGNMENT_DETAIL */
   [AT.FETCH_ASSIGNMENT_DETAIL.success]: (state, action) => {
     const currentAssignmentObj = action.payload.data;
+    const allSubmissionAnswers = _.flow(
+      x => _.map(x, submission => submission.answers),
+      _.flattenDeep,
+    )(currentAssignmentObj.submissions);
     return _.assign({}, state, {
-      currentAssignment: new Assignment(currentAssignmentObj),
+      currentAssignment: new Assignment(currentAssignmentObj, allSubmissionAnswers),
     });
   },
 

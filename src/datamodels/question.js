@@ -11,6 +11,7 @@ export default class Question {
   constructor(initObj) {
     this._id = initObj._id;
     this.text = initObj.text;
+    this.completedTag = false;
   }
 
 }
