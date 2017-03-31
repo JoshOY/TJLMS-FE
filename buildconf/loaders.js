@@ -59,7 +59,6 @@ export const jsLoader = () => ({
           'transform-async-to-generator',
           'transform-regenerator',
           'transform-runtime',
-          'react-hot-loader/babel',
           'lodash',
           [
             'import',
