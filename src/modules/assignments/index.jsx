@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import _ from 'lodash';
 import ReactMarkdown from 'react-markdown';
 import { Button } from 'antd';
+import moment from 'moment';
 
 import Assignment from 'src/datamodels/assignment';
 import Problem from 'src/datamodels/problem';
@@ -196,9 +197,26 @@ class AssignmentsModule extends React.Component {
                   type="primary"
                   size="large"
                   onClick={this.onClickSaveBtn}
+                  disabled={
+                    (currentAssignment ?
+                      (currentAssignment.end_at < (new Date()).getTime()) :
+                      false
+                    )
+                  }
                 >
                   Save
                 </Button>
+                <div className="float-right">
+                  <span>This assignment will be closed at: </span>
+                  <span>
+                    {
+                    currentAssignment ?
+                      moment(currentAssignment.end_at).format('YYYY-MM-DD HH:mm:ss') :
+                      ''
+                    }
+                    &nbsp;UTC+8
+                  </span>
+                </div>
               </div>
             </main>
           </Route>
