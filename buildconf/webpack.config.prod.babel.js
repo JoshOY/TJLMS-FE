@@ -14,6 +14,13 @@ const prjRoot = p => path.resolve(__dirname, '../', p);
 
 config.plugins.pop(); // LoaderOptionsPlugin
 config.plugins.push(
+  new webpack.DefinePlugin({
+    'process.env': {
+      NODE_ENV: JSON.stringify('production'),
+    },
+  }),
+);
+config.plugins.push(
   new webpack.optimize.UglifyJsPlugin(),
 );
 config.plugins.push(new webpack.LoaderOptionsPlugin({

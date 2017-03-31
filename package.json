@@ -8,7 +8,8 @@
     "lint": "eslint . --ignore-path ./.eslintignore",
     "watch": "webpack --config buildconf/webpack.config.dev.babel.js --progress --watch",
     "build": "webpack --config buildconf/webpack.config.prod.babel.js --progress",
-    "dev": "babel-node buildconf/devserver/devserver.js"
+    "dev": "babel-node buildconf/devserver/devserver.js",
+    "start": "babel-node ./webserver/index.js"
   },
   "repository": {
     "type": "git",
