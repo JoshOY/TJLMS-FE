@@ -102,4 +102,34 @@ export default class Actions {
     };
     return asyncFn();
   };
+
+  static changePwdAsync = newPwd => (dispatch) => {
+    const asyncFn = async () => {
+      dispatch({
+        type: AT.CHANGE_PWD.pending,
+      });
+      const respObj = await ApiUtil.tokenPost(
+        '/api/manage/user/update',
+        {
+          password: newPwd,
+        },
+      );
+      if (respObj.code === 200) {
+        // console.log(respObj);
+        message.success('Password changed.');
+        dispatch({
+          type: AT.CHANGE_PWD.success,
+          payload: respObj,
+        });
+      } else {
+        message.error(respObj.reason);
+        dispatch({
+          type: AT.CHANGE_PWD.failed,
+          payload: respObj,
+        });
+      }
+      return respObj;
+    };
+    return asyncFn();
+  };
 }

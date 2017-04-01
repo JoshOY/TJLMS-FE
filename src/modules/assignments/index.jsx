@@ -21,6 +21,7 @@ import Aside from './submodule/aside';
 import { ProblemTagsContainer } from './submodule/problem-tag';
 import AnswersTextArea from './submodule/answers-text-area';
 import CodeRenderer from '../../common/components/code-renderer';
+import ChangePassword from './submodule/change-password';
 
 /**
  * Import Actions
@@ -153,7 +154,12 @@ class AssignmentsModule extends React.Component {
           {/* /assignments */}
           <Route path="/assignments" exact>
             <main className="disp-flex assignments__main">
-              <h1>Select an assignment to complete.</h1>
+              <h1 className="text-align-center">Select an assignment to complete.</h1>
+            </main>
+          </Route>
+          <Route path="/assignments/change-pwd" exact>
+            <main className="disp-flex assignments__main">
+              <ChangePassword />
             </main>
           </Route>
           {/* /assignments/:assignmentId */}

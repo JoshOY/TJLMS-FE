@@ -16,4 +16,5 @@ export default {
   SET_CURRENT_PROBLEM: wrapByNamespace('SET_CURRENT_PROBLEM'),
   CHANGE_ANSWER_VALUE: wrapByNamespace('CHANGE_ANSWER_VALUE'),
   SUBMIT_ANSWERS: createAsyncActions('SUBMIT_ANSWERS'),
+  CHANGE_PWD: createAsyncActions('CHANGE_PWD'),
 };

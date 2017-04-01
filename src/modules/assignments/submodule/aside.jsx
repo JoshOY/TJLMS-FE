@@ -63,6 +63,11 @@ class AssignmentsAside extends React.Component {
           >
             {this.renderAssignmentMenuItems()}
           </SubMenu>
+          <MenuItem key="changePwd">
+            <Link to="/assignments/change-pwd">
+              Change password
+            </Link>
+          </MenuItem>
           <MenuItem key="logout">
             Logout
           </MenuItem>

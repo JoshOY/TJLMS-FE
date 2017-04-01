@@ -87,6 +87,12 @@ const main = async () => {
             component={Assignments}
           />
           <AuthRoute
+            path="/assignments/change-pwd"
+            exact
+            allowedRoles={['admin', 'ta', 'student']}
+            component={Assignments}
+          />
+          <AuthRoute
             path="/assignments/:assignmentId"
             exact
             allowedRoles={['admin', 'ta', 'student']}
