@@ -17,6 +17,7 @@ export default class Assignment {
     this.problems = _.map(initObj.problems, p => new Problem(p)) || [];
     this.visible = initObj.visible;
     this.submissions = initObj.submissions;
+    this.read_only = initObj.read_only;
     /**
      * Check complete status for each problem in this assignment
      */
@@ -57,4 +58,24 @@ export default class Assignment {
     return moment(this.end_at);
   }
 
+  setName(newValue) {
+    const ret = _.cloneDeep(this);
+    ret.name = newValue;
+    return ret;
+  }
+
+  setVisible(newValue) {
+    const ret = _.cloneDeep(this);
+    ret.visible = newValue;
+    return ret;
+  }
+
+  setTimeRange(begin_at, end_at) {
+    const newBeginAt = moment(begin_at);
+    const newEndAt = moment(end_at);
+    const ret = _.cloneDeep(this);
+    ret.begin_at = newBeginAt.toDate().getTime();
+    ret.end_at = newEndAt.toDate().getTime();
+    return ret;
+  }
 }

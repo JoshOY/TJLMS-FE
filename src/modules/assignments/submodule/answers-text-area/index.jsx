@@ -43,9 +43,6 @@ class AnswersTextArea extends React.PureComponent {
     const elemClassName = classNames('answers-text-area', this.props.className);
     return (
       <div className={elemClassName}>
-        <label htmlFor={`ans-id-${this.props.label}`}>
-          Answer {this.props.label}:
-        </label>
         <Input
           id={`ans-id-${this.props.label}`}
           type="textarea"
