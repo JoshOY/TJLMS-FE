@@ -74,8 +74,18 @@ export default class Assignment {
     const newBeginAt = moment(begin_at);
     const newEndAt = moment(end_at);
     const ret = _.cloneDeep(this);
-    ret.begin_at = newBeginAt.toDate().getTime();
-    ret.end_at = newEndAt.toDate().getTime();
+    ret.begin_at = newBeginAt
+      .hour(0)
+      .minute(0)
+      .second(0)
+      .toDate()
+      .getTime();
+    ret.end_at = newEndAt
+      .hour(23)
+      .minute(59)
+      .second(59)
+      .toDate()
+      .getTime();
     return ret;
   }
 
