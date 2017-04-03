@@ -105,7 +105,7 @@ export default class Actions {
    * @param {string} ptext
    * @param {Array<string>} qtexts
    */
-  static createProblemAsync = (assignmentId, order, ptext, qtexts) => (dispatch) => {
+  static createProblemAsync = (assignmentId, order, ptext, qtexts, visible) => (dispatch) => {
     const asyncFn = async () => {
       dispatch({
         type: AT.CREATE_ASSIGNMENT.pending,
@@ -116,7 +116,7 @@ export default class Actions {
           order,
           ptext,
           qtexts,
-          visible: true,
+          visible,
         },
       );
       if (respObj.code === 200) {
@@ -142,12 +142,13 @@ export default class Actions {
     type: AT.INIT_PROBLEM_CREATOR,
   });
 
-  static updateProblemCreatorState = (qNum, pText, qTexts) => ({
+  static updateProblemCreatorState = (qNum, pText, qTexts, visible) => ({
     type: AT.UPDATE_PROBLEM_CREATOR,
     payload: {
       qNum,
       pText,
       qTexts,
+      visible,
     },
   });
 
@@ -171,11 +172,18 @@ export default class Actions {
     payload: newEditingAssignmentState,
   });
 
-  static saveChangesOfEditingProblemAsync = problem => (dispatch) => {
+  static saveChangesOfEditingProblemAsync = (problem, manageAssignmentObj) => (dispatch) => {
     const asyncFn = async () => {
       dispatch({
         type: AT.SAVE_EDITING_PROBLEM_CHANGES.pending,
       });
+      await ApiUtil.tokenPost(
+        `/api/manage/update/problem/${problem._id}/meta`,
+        {
+          ...problem.getUpdateMetaObject(),
+          assignment_id: manageAssignmentObj._id,
+        },
+      );
       const respObj = await ApiUtil.tokenPost(
         `/api/manage/update/problem/${problem._id}/content`,
         problem.getUpdateObject(),

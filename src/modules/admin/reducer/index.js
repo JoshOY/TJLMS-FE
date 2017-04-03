@@ -18,6 +18,7 @@ const initState = {
   creatingProblemTotalQuestionNum: 1,
   creatingProblemText: '',
   creatingProblemQuestionTexts: [''],
+  creatingProblemVisible: true,
   // editing assignment related
   manageAssignmentObj: null,
   // editing problem related
@@ -47,11 +48,12 @@ const handleDispatches = {
     creatingProblemQuestionTexts: [''],
   }),
   [AT.UPDATE_PROBLEM_CREATOR]: (state, action) => {
-    const { qNum, pText, qTexts } = action.payload;
+    const { qNum, pText, qTexts, visible } = action.payload;
     return _.assign({}, state, {
       creatingProblemTotalQuestionNum: qNum,
       creatingProblemText: pText,
       creatingProblemQuestionTexts: qTexts,
+      creatingProblemVisible: visible,
     });
   },
   [AT.LOAD_EDITING_PROBLEM]: (state, action) => {

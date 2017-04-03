@@ -1,6 +1,6 @@
 import React, { PropTypes as P } from 'react';
 import { connect } from 'react-redux';
-import { Input, InputNumber, Button } from 'antd';
+import { Input, InputNumber, Button, Switch } from 'antd';
 import _ from 'lodash';
 import Problem from 'src/datamodels/problem';
 
@@ -72,10 +72,27 @@ class ProblemManager extends React.Component {
     this.props.dispatch(Actions.updateEditingProblem(newState));
   };
 
+  onChangeOrder = (newValue) => {
+    const { editingProblem } = this.props;
+    const newState = editingProblem.setQuestionOrder(newValue);
+    this.props.dispatch(Actions.updateEditingProblem(newState));
+  };
+
+  onSwitchVisible = (checked) => {
+    const { editingProblem } = this.props;
+    const newState = editingProblem.setVisible(checked);
+    this.props.dispatch(Actions.updateEditingProblem(newState));
+  };
+
   onClickSaveChangesBtn = () => {
     this.props.dispatch(Actions.saveChangesOfEditingProblemAsync(
       this.props.editingProblem,
-    ));
+      this.props.manageAssignmentObj,
+    )).then(() => {
+      this.props.dispatch(Actions.fetchAssignmentDetailAsync(
+        this.props.manageAssignmentObj._id,
+      ));
+    });
   };
 
   renderQuestionsSet = () => {
@@ -113,12 +130,30 @@ class ProblemManager extends React.Component {
           value={editingProblem ? editingProblem.text : ''}
           onChange={this.onTextChange}
         />
-        <h4>Total question num:</h4>
-        <InputNumber
-          min={1}
-          value={editingProblem ? editingProblem.questions.length : 1}
-          onChange={this.onQNumChange}
-        />
+        <div>
+          <h4>Total question num:</h4>
+          <InputNumber
+            min={1}
+            value={editingProblem ? editingProblem.questions.length : 1}
+            onChange={this.onQNumChange}
+          />
+        </div>
+        <div className="m-t-s">
+          <span>Visible: </span>
+          <br />
+          <Switch
+            checked={editingProblem ? editingProblem.visible : false}
+            onChange={this.onSwitchVisible}
+          />
+        </div>
+        <div className="m-t-s">
+          <span>Problem order: </span>
+          <br />
+          <InputNumber
+            value={editingProblem ? editingProblem.order : 0}
+            onChange={this.onChangeOrder}
+          />
+        </div>
         <h4 className="m-t-md m-b-md">Question Texts:</h4>
         <ol className="m-t-md m-b-md">
           {this.renderQuestionsSet()}

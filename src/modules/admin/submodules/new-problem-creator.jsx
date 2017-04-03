@@ -1,6 +1,6 @@
 import React, { PropTypes as P } from 'react';
 import { connect } from 'react-redux';
-import { Input, InputNumber, Button } from 'antd';
+import { Input, InputNumber, Button, Switch } from 'antd';
 import _ from 'lodash';
 
 import Actions from '../actions';
@@ -16,6 +16,7 @@ class NewProblemCreator extends React.Component {
     // from external
     assignmentId: P.string.isRequired,
     order: P.number.isRequired,
+    creatingProblemVisible: P.bool.isRequired,
   };
 
   static defaultProps = {
@@ -39,6 +40,7 @@ class NewProblemCreator extends React.Component {
         this.props.creatingProblemTotalQuestionNum,
         ev.target.value,
         this.props.creatingProblemQuestionTexts,
+        this.props.creatingProblemVisible,
       ),
     );
   };
@@ -60,6 +62,7 @@ class NewProblemCreator extends React.Component {
         newValue,
         this.props.creatingProblemText,
         newPTexts,
+        this.props.creatingProblemVisible,
       ),
     );
   };
@@ -72,6 +75,18 @@ class NewProblemCreator extends React.Component {
         this.props.creatingProblemTotalQuestionNum,
         this.props.creatingProblemText,
         newPTexts,
+        this.props.creatingProblemVisible,
+      ),
+    );
+  };
+
+  onSwitchVisible = (checked) => {
+    this.props.dispatch(
+      Actions.updateProblemCreatorState(
+        this.props.creatingProblemTotalQuestionNum,
+        this.props.creatingProblemText,
+        this.props.creatingProblemQuestionTexts,
+        checked,
       ),
     );
   };
@@ -82,6 +97,7 @@ class NewProblemCreator extends React.Component {
       this.props.order,
       this.props.creatingProblemText,
       this.props.creatingProblemQuestionTexts,
+      this.props.creatingProblemVisible,
     )).then(() => {
       this.props.dispatch(Actions.resetNewProblemCreator());
       this.props.dispatch(Actions.fetchAssignmentDetailAsync(
@@ -131,6 +147,14 @@ class NewProblemCreator extends React.Component {
           value={creatingProblemTotalQuestionNum}
           onChange={this.onQNumChange}
         />
+        <div className="m-t-s">
+          <span>Visible: </span>
+          <br />
+          <Switch
+            checked={this.props.creatingProblemVisible}
+            onChange={this.onSwitchVisible}
+          />
+        </div>
         <h4 className="m-t-md m-b-md">Question Texts:</h4>
         <ol className="m-t-md m-b-md">
           {this.renderQuestionsSet()}
@@ -153,6 +177,7 @@ const mapStateToProps = state => ({
   creatingProblemTotalQuestionNum: state.admin.creatingProblemTotalQuestionNum,
   creatingProblemText: state.admin.creatingProblemText,
   creatingProblemQuestionTexts: state.admin.creatingProblemQuestionTexts,
+  creatingProblemVisible: state.admin.creatingProblemVisible,
 });
 
 const mapDispatchesToProps = dispatch => ({
