@@ -1,11 +1,15 @@
 import React, { PropTypes as P } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
+import moment from 'moment';
 import { Route, Link } from 'react-router-dom';
+import { Button, DatePicker, Input, Icon, Switch } from 'antd';
 
 import Actions from '../actions';
 import NewProblemCreator from './new-problem-creator';
 import ProblemManager from './problem-manager';
+
+const RangePicker = DatePicker.RangePicker;
 
 class AssignmentManagement extends React.Component {
 
@@ -47,6 +51,30 @@ class AssignmentManagement extends React.Component {
     }
   }
 
+  onChangeName = (ev) => {
+    this.props.dispatch(Actions.updateEditingAssignment(
+      this.props.manageAssignmentObj.setName(ev.target.value),
+    ));
+  };
+
+  onChangeTimeRange = (dates) => {
+    this.props.dispatch(Actions.updateEditingAssignment(
+      this.props.manageAssignmentObj.setTimeRange(dates[0], dates[1]),
+    ));
+  };
+
+  onChangeVisible = (checked) => {
+    this.props.dispatch(Actions.updateEditingAssignment(
+      this.props.manageAssignmentObj.setVisible(checked),
+    ));
+  };
+
+  onSubmitAssignmentChanges = () => {
+    this.props.dispatch(Actions.saveChangesOfEditingAssignmentAsync(
+      this.props.manageAssignmentObj,
+    ));
+  };
+
   fetchAssignmentDetailAsync = assignmentId =>
     this.props.dispatch(Actions.fetchAssignmentDetailAsync(assignmentId));
 
@@ -77,15 +105,48 @@ class AssignmentManagement extends React.Component {
     const { manageAssignmentObj } = this.props;
     return (
       <div className="m-t-s admin-assignment-management">
-        <h3>Name: {manageAssignmentObj ? manageAssignmentObj.name : ''}</h3>
-        <p>Object ID: {manageAssignmentObj ? manageAssignmentObj._id : ''}</p>
-        <p>Begin at: {manageAssignmentObj ?
-          manageAssignmentObj.getBeginAtMoment().format('YYYY-MM-DD HH:mm:ss') :
-          ''}</p>
-        <p>End at: {manageAssignmentObj ?
-          manageAssignmentObj.getEndAtMoment().format('YYYY-MM-DD HH:mm:ss') :
-          ''}</p>
-        <div className="problem-items-container">
+        <div>
+          <h3>Object ID: {manageAssignmentObj ? manageAssignmentObj._id : ''}</h3>
+        </div>
+        <div>
+          <span>Name: </span>
+          <Input
+            value={manageAssignmentObj ? manageAssignmentObj.name : ''}
+            onChange={this.onChangeName}
+          />
+        </div>
+        <div className="m-t-s">
+          <span>Available time range:</span>
+          <br />
+          <RangePicker
+            value={[
+              manageAssignmentObj ?
+                manageAssignmentObj.getBeginAtMoment() : moment(),
+              manageAssignmentObj ?
+                manageAssignmentObj.getEndAtMoment() : moment(),
+            ]}
+            onChange={this.onChangeTimeRange}
+          />
+        </div>
+        <div className="m-t-s">
+          <span>Assignment visible:</span>
+          <br />
+          <Switch
+            checkedChildren={<Icon type="check" />}
+            unCheckedChildren={<Icon type="cross" />}
+            checked={manageAssignmentObj ? manageAssignmentObj.visible : false}
+            onChange={this.onChangeVisible}
+          />
+        </div>
+        <div className="m-t-s">
+          <Button
+            type="primary"
+            onClick={this.onSubmitAssignmentChanges}
+          >
+            Save assignment config
+          </Button>
+        </div>
+        <div className="m-t-lg problem-items-container">
           <h3>Created problems</h3>
           <div>{this.renderProblems(manageAssignmentObj ? manageAssignmentObj.problems : [])}</div>
         </div>

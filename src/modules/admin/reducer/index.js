@@ -66,6 +66,12 @@ const handleDispatches = {
       editingProblem: newEditingProblemState,
     });
   },
+  [AT.UPDATE_EDITING_ASSIGNMENT]: (state, action) => {
+    const newEditingAssignmentState = action.payload;
+    return _.assign({}, state, {
+      manageAssignmentObj: newEditingAssignmentState,
+    });
+  },
 };
 
 /**

@@ -78,4 +78,13 @@ export default class Assignment {
     ret.end_at = newEndAt.toDate().getTime();
     return ret;
   }
+
+  getUpdateObject() {
+    return {
+      name: this.name,
+      begin_at: this.begin_at,
+      end_at: this.end_at,
+      visible: this.visible,
+    };
+  }
 }

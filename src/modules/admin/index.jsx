@@ -59,10 +59,8 @@ class AdminModule extends React.Component {
       this.state.createAssignmentTimeStart,
       this.state.createAssignmentTimeEnd,
       this.state.createAssignmentVisible,
-    )).then((respObj) => {
-      if (respObj.code === 200) {
-        this.props.dispatch(Actions.fetchAssignmentListAsync());
-      }
+    )).then(() => {
+      this.props.dispatch(Actions.fetchAssignmentListAsync());
     });
   };
 

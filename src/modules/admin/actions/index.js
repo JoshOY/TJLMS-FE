@@ -16,7 +16,7 @@ export default class Actions {
       dispatch({
         type: AT.FETCH_ASSIGNMENT_LIST.pending,
       });
-      const respObj = await ApiUtil.tokenGet('/api/assignment');
+      const respObj = await ApiUtil.tokenGet('/api/manage/assignment');
       dispatch({
         type: AT.FETCH_ASSIGNMENT_LIST.success,
         payload: respObj,
@@ -80,7 +80,7 @@ export default class Actions {
       dispatch({
         type: AT.MANAGE_ASSIGNMENT.pending,
       });
-      const respObj = await ApiUtil.tokenGet(`/api/assignment/${assignmentId}`);
+      const respObj = await ApiUtil.tokenGet(`/api/manage/assignment/${assignmentId}`);
       if (respObj.code === 200) {
         dispatch({
           type: AT.MANAGE_ASSIGNMENT.success,
@@ -166,6 +166,11 @@ export default class Actions {
     payload: newEditingProblemState,
   });
 
+  static updateEditingAssignment = newEditingAssignmentState => ({
+    type: AT.UPDATE_EDITING_ASSIGNMENT,
+    payload: newEditingAssignmentState,
+  });
+
   static saveChangesOfEditingProblemAsync = problem => (dispatch) => {
     const asyncFn = async () => {
       dispatch({
@@ -183,6 +188,30 @@ export default class Actions {
       message.success('Save changes complete.');
       dispatch({
         type: AT.SAVE_EDITING_PROBLEM_CHANGES.success,
+        payload: respObj,
+      });
+      return Promise.resolve();
+    };
+    return asyncFn();
+  };
+
+  static saveChangesOfEditingAssignmentAsync = assignment => (dispatch) => {
+    const asyncFn = async () => {
+      dispatch({
+        type: AT.SAVE_EDITING_ASSIGNMENT_CHANGES.pending,
+      });
+      const respObj = await ApiUtil.tokenPost(
+        `/api/manage/update/assignment/${assignment._id}`,
+        assignment.getUpdateObject(),
+      );
+      if (respObj.code !== 200) {
+        message.error(respObj.msg);
+        return Promise.reject();
+      }
+      // if success
+      message.success('Save changes complete.');
+      dispatch({
+        type: AT.SAVE_EDITING_ASSIGNMENT_CHANGES.success,
         payload: respObj,
       });
       return Promise.resolve();
