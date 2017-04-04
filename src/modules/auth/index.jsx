@@ -47,6 +47,9 @@ class LoginModule extends React.Component {
     } else if (loginCode && (loginCode === 200)) {
       switch (userStatus.role) {
       case 'student':
+        if (userStatus.first) {
+          return (<Redirect to="/assignments/change-pwd" />);
+        }
         return (<Redirect to="/assignments" />);
       case 'admin':
       case 'ta':
