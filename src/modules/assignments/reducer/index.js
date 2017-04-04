@@ -82,6 +82,7 @@ const handleDispatches = {
         },
       );
     }
+    window.onbeforeunload = undefined;
     return _.assign({}, state, {
       currentProblem: new Problem(action.payload),
       currentAnswers: newCurrentAnswersState,
@@ -97,6 +98,16 @@ const handleDispatches = {
     } = action.payload;
     const currentAnswersNewState = _.cloneDeep(state.currentAnswers);
     currentAnswersNewState[answerIdx].text = newValue;
+    window.onbeforeunload = (ev) => {
+      const message = 'Your confirmation message goes here.';
+      const e = ev || window.event;
+      // For IE and Firefox
+      if (e) {
+        e.returnValue = message;
+      }
+      // For Safari
+      return message;
+    };
     return _.assign({}, state, {
       currentAnswers: currentAnswersNewState,
       currentAnswersIsDirty: true,
