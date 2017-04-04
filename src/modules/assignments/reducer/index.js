@@ -99,7 +99,7 @@ const handleDispatches = {
     const currentAnswersNewState = _.cloneDeep(state.currentAnswers);
     currentAnswersNewState[answerIdx].text = newValue;
     window.onbeforeunload = (ev) => {
-      const message = 'Your confirmation message goes here.';
+      const message = 'Are you sure you want to close this page? Your current changes will not be saved.';
       const e = ev || window.event;
       // For IE and Firefox
       if (e) {

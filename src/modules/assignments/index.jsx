@@ -1,6 +1,6 @@
 import React, { PropTypes as P } from 'react';
 import { connect } from 'react-redux';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Prompt } from 'react-router-dom';
 import _ from 'lodash';
 import ReactMarkdown from 'react-markdown';
 import { Button } from 'antd';
@@ -40,6 +40,7 @@ class AssignmentsModule extends React.Component {
     currentAssignment: P.instanceOf(Assignment),
     currentProblem: P.instanceOf(Problem),
     currentAnswers: P.array,
+    currentAnswersIsDirty: P.bool.isRequired,
   };
 
   static defaultProps = {
@@ -154,6 +155,7 @@ class AssignmentsModule extends React.Component {
     const {
       currentAssignment,
       currentProblem,
+      currentAnswersIsDirty,
     } = this.props;
     return (
       <div className="app-module relative full-size assignments">
@@ -206,6 +208,13 @@ class AssignmentsModule extends React.Component {
                   }}
                 />
                 {this.renderQuestionsAndAnswers()}
+                <Prompt
+                  when={currentAnswersIsDirty}
+                  message={
+                    () =>
+                      'Are you sure you want to go to another page? Your current changes will not be saved.'
+                  }
+                />
               </div>
               <div className="assignments__op-btns-container">
                 <Button
