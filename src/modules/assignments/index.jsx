@@ -21,6 +21,7 @@ import Aside from './submodule/aside';
 import { ProblemTagsContainer } from './submodule/problem-tag';
 import AnswersTextArea from './submodule/answers-text-area';
 import CodeRenderer from '../../common/components/code-renderer';
+import LinkRenderer from '../../common/components/link-renderer';
 import ChangePassword from './submodule/change-password';
 
 /**
@@ -201,6 +202,7 @@ class AssignmentsModule extends React.Component {
                   renderers={{
                     CodeBlock: CodeRenderer,
                     Code: CodeRenderer,
+                    Link: LinkRenderer,
                   }}
                 />
                 {this.renderQuestionsAndAnswers()}
