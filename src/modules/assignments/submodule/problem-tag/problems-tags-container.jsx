@@ -52,7 +52,9 @@ class QuestionTagsContainer extends React.Component {
           key={`${idx}-${problem._id}`}
           type={type}
         >
-          <Link to={`/assignments/${this.props.assignmentId}/${problem._id}`}>{`P${idx + 1}`}</Link>
+          <Link to={`/assignments/${this.props.assignmentId}/${problem._id}`}>
+            {`P${idx + 1}`}
+          </Link>
         </ProblemTag>
       );
     });

@@ -87,12 +87,19 @@ class AssignmentsModule extends React.Component {
       (nextProps.match.params.problemId !== this.props.match.params.problemId) &&
       (nextProps.currentAssignment)
     ) {
-      this.props.dispatch(Actions.setCurrentProblem(
-        _.find(
-          nextProps.currentAssignment.problems,
-          q => (q._id === nextProps.match.params.problemId),
+      this.props.dispatch(
+        Actions.fetchAssignmentDetailAsync(
+          nextProps.match.params.assignmentId,
+          this.props.match.params.problemId,
         ),
-      ));
+      ).then(() => {
+        this.props.dispatch(Actions.setCurrentProblem(
+          _.find(
+            nextProps.currentAssignment.problems,
+            q => (q._id === nextProps.match.params.problemId),
+          ),
+        ));
+      });
     }
   }
 
