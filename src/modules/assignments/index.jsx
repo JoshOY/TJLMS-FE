@@ -131,6 +131,7 @@ class AssignmentsModule extends React.Component {
           renderers={{
             CodeBlock: CodeRenderer,
             Code: CodeRenderer,
+            Link: LinkRenderer,
           }}
         />
         <AnswersTextArea
