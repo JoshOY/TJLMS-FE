@@ -13,6 +13,7 @@ const createAsyncActions = actionName => ({
 export default {
   FETCH_ASSIGNMENTS: createAsyncActions('FETCH_ASSIGNMENTS'),
   FETCH_ASSIGNMENT_DETAIL: createAsyncActions('FETCH_ASSIGNMENT_DETAIL'),
+  FETCH_PROBLEM_DETAIL: createAsyncActions('FETCH_PROBLEM_DETAIL'),
   SET_CURRENT_PROBLEM: wrapByNamespace('SET_CURRENT_PROBLEM'),
   CHANGE_ANSWER_VALUE: wrapByNamespace('CHANGE_ANSWER_VALUE'),
   SUBMIT_ANSWERS: createAsyncActions('SUBMIT_ANSWERS'),

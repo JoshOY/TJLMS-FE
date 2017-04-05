@@ -18,6 +18,7 @@ export default class Problem {
     this.text = initObj.text;
     this.questions = _.map(initObj.questions, q => new Question(q));
     this.visible = initObj.visible;
+    this.read_only = initObj.read_only;
     this.type = initObj.type || 'default';
   }
 

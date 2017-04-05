@@ -59,16 +59,15 @@ class AssignmentsModule extends React.Component {
 
   componentDidMount() {
     this.props.dispatch(
-        Actions.fetchAssignmentListAsync(),
-      )
-      .then(() => {
-        if (this.props.match.params.assignmentId) {
-          const { assignmentId, problemId } = this.props.match.params;
-          this.props.dispatch(
-            Actions.fetchAssignmentDetailAsync(assignmentId, problemId),
-          );
-        }
-      });
+      Actions.fetchAssignmentListAsync(),
+    ).then(() => {
+      if (this.props.match.params.assignmentId) {
+        const { assignmentId, problemId } = this.props.match.params;
+        this.props.dispatch(
+          Actions.fetchAssignmentDetailAsync(assignmentId, problemId),
+        );
+      }
+    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -107,8 +106,13 @@ class AssignmentsModule extends React.Component {
 
   onClickSaveBtn = () => {
     this.props.dispatch(Actions.submitAnswersAsync())
-      .then(() => {
-        this.props.dispatch(
+      .then((err) => {
+        if (err) {
+          // eslint-disable-next-line no-console
+          console.error(err);
+          return null;
+        }
+        return this.props.dispatch(
           Actions.fetchAssignmentDetailAsync(
             this.props.currentAssignment._id,
             this.props.currentProblem._id,
@@ -142,6 +146,7 @@ class AssignmentsModule extends React.Component {
             dispatch(Actions.changeAnswerValue(idx, ev.target.value));
           }}
           disabled={
+            (currentProblem.read_only) ||
             (currentAssignment.begin_at > (new Date()).getTime()) ||
             (currentAssignment.end_at < (new Date()).getTime())
           }
