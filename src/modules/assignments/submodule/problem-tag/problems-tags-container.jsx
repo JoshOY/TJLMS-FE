@@ -28,7 +28,7 @@ class QuestionTagsContainer extends React.Component {
 
   renderTags = (tags, numEachRow) => {
     const rowNum = Math.ceil(tags.length / numEachRow);
-    const renderingTagsArray = _.cloneDeep(tags);
+    const renderingTagsArray = _.filter(_.cloneDeep(tags), q => q.visible);
     while (renderingTagsArray.length < (rowNum * numEachRow)) {
       renderingTagsArray.push(
         new Problem({

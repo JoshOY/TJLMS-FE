@@ -10,6 +10,7 @@ class AnswersTextArea extends React.PureComponent {
     rows: P.number,
     label: P.number.isRequired,
     className: P.string,
+    disabled: P.bool,
   };
 
   static defaultProps = {
@@ -17,6 +18,7 @@ class AnswersTextArea extends React.PureComponent {
     onChange: undefined,
     rows: 4,
     className: '',
+    disabled: false,
   };
 
   constructor(props) {
@@ -49,6 +51,7 @@ class AnswersTextArea extends React.PureComponent {
           rows={this.props.rows}
           value={textValue}
           onChange={this.onChange}
+          disabled={this.props.disabled || false}
         />
       </div>
     );

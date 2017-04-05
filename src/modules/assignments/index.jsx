@@ -118,7 +118,7 @@ class AssignmentsModule extends React.Component {
   };
 
   renderQuestionsAndAnswers = () => {
-    const { currentProblem, currentAnswers, dispatch } = this.props;
+    const { currentAssignment, currentProblem, currentAnswers, dispatch } = this.props;
     if (!currentProblem) {
       return [];
     }
@@ -134,12 +134,17 @@ class AssignmentsModule extends React.Component {
             Link: LinkRenderer,
           }}
         />
+        {/* disable textarea if this problem is not available */}
         <AnswersTextArea
           label={idx + 1}
           value={currentAnswers[idx].text}
           onChange={(ev) => {
             dispatch(Actions.changeAnswerValue(idx, ev.target.value));
           }}
+          disabled={
+            (currentAssignment.begin_at > (new Date()).getTime()) ||
+            (currentAssignment.end_at < (new Date()).getTime())
+          }
         />
       </li>
     ));
