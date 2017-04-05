@@ -34,7 +34,7 @@ export default class Actions {
         );
         // console.log('respObj =', respObj);
         if (respObj.code !== 200) {
-          return message.error(respObj.msg);
+          return message.error(respObj.reason);
         }
         // else if success
         const reducerState = getState().login;

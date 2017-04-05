@@ -59,7 +59,7 @@ export default class Actions {
         },
       );
       if (respObj.code !== 200) {
-        message.error(respObj.msg);
+        message.error(respObj.reason);
         return respObj;
       }
       message.success('Assignment created.');
@@ -87,7 +87,7 @@ export default class Actions {
           payload: respObj.data,
         });
       } else {
-        message.error(respObj.msg);
+        message.error(respObj.reason);
         dispatch({
           type: AT.MANAGE_ASSIGNMENT.failed,
           payload: respObj,
@@ -126,7 +126,7 @@ export default class Actions {
           payload: respObj.data,
         });
       } else {
-        message.error(respObj.msg);
+        message.error(respObj.reason);
         dispatch({
           type: AT.CREATE_ASSIGNMENT.failed,
           payload: respObj,
@@ -189,7 +189,7 @@ export default class Actions {
         problem.getUpdateObject(),
       );
       if (respObj.code !== 200) {
-        message.error(respObj.msg);
+        message.error(respObj.reason);
         return Promise.reject();
       }
       // if success
@@ -213,7 +213,7 @@ export default class Actions {
         assignment.getUpdateObject(),
       );
       if (respObj.code !== 200) {
-        message.error(respObj.msg);
+        message.error(respObj.reason);
         return Promise.reject();
       }
       // if success

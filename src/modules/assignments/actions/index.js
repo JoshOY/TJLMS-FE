@@ -33,7 +33,7 @@ export default class Actions {
       });
       const respObj = await ApiUtil.tokenGet(`/api/assignment/${assignmentId}`);
       if (respObj.code !== 200) {
-        message.error(respObj.msg);
+        message.error(respObj.reason);
         return Promise.reject();
       }
       dispatch({

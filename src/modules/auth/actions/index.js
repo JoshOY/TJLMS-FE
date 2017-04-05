@@ -47,7 +47,7 @@ export default class Actions {
           });
         }
         // else
-        throw new Error(resp.msg);
+        throw new Error(resp.reason);
       } catch (err) {
         // eslint-disable-next-line no-console
         console.error(err);
