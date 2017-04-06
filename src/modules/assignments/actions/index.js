@@ -13,10 +13,12 @@ export default class Actions {
 
   static fetchAssignmentListAsync = () => (dispatch) => {
     const asyncFn = async () => {
+      const dismissMsg = message.loading('Loading assignment info...', 0);
       dispatch({
         type: AT.FETCH_ASSIGNMENTS.pending,
       });
       const respObj = await ApiUtil.tokenGet('/api/assignment');
+      dismissMsg();
       dispatch({
         type: AT.FETCH_ASSIGNMENTS.success,
         payload: respObj,
@@ -28,10 +30,12 @@ export default class Actions {
 
   static fetchAssignmentDetailAsync = (assignmentId, problemId) => (dispatch) => {
     const asyncFn = async () => {
+      const dismissMsg = message.loading('Loading problem info...', 0);
       dispatch({
         type: AT.FETCH_ASSIGNMENT_DETAIL.pending,
       });
       const respObj = await ApiUtil.tokenGet(`/api/assignment/${assignmentId}`);
+      dismissMsg();
       if (respObj.code !== 200) {
         message.error(respObj.reason);
         return Promise.reject();
