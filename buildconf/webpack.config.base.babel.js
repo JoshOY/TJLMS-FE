@@ -29,7 +29,7 @@ const htmlPluginConfig = {
       content: 'Tongji SSE learning management system.',
     },
   ],
-  mobile: true,
+  mobile: false,
   links: [],
   appMountId: 'app-root',
 };
