@@ -60,7 +60,7 @@ export default class Actions {
       });
       try {
         const respObj = await ApiUtil.tokenGet(`/api/assignment/${assignmentId}/${problemId}`);
-        console.log(respObj);
+        // console.log(respObj);
         if (respObj.code !== 200) {
           throw new Error(respObj.reason);
         }

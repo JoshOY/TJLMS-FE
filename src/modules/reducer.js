@@ -14,6 +14,7 @@ import authReducer from './auth/reducer';
 import loginReducer from './login/reducer';
 import adminReducer from './admin/reducer';
 import assignmentsReducer from './assignments/reducer';
+import submissionHistoryReducer from './submission-history/reducer';
 
 /**
  * Combine reducers
@@ -24,6 +25,7 @@ const RootReducer = combineReducers({
   login: loginReducer,
   admin: adminReducer,
   assignments: assignmentsReducer,
+  submissionHistory: submissionHistoryReducer,
 });
 
 export default RootReducer;

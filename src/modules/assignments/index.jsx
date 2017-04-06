@@ -241,6 +241,19 @@ class AssignmentsModule extends React.Component {
                 >
                   Save
                 </Button>
+                <a
+                  href={`/submission-history/${currentAssignment ? currentAssignment._id : ''}/${currentProblem ? currentProblem._id : ''}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Button
+                    className="m-l-md"
+                    type="primary"
+                    size="large"
+                  >
+                    View submission history
+                  </Button>
+                </a>
                 <div className="float-right">
                   <span>This assignment will be closed at: </span>
                   <span>

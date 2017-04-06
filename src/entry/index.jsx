@@ -22,6 +22,7 @@ import {
   Assignments,
   Auth,
   Admin,
+  SubmissionHistory,
 } from '../modules';
 
 const { AssignmentManagement } = Admin;
@@ -103,6 +104,18 @@ const main = async () => {
             exact
             allowedRoles={['admin', 'ta', 'student']}
             component={Assignments}
+          />
+          <AuthRoute
+            path="/submission-history/:assignmentId/:problemId"
+            exact
+            allowedRoles={['admin', 'ta', 'student']}
+            component={SubmissionHistory}
+          />
+          <AuthRoute
+            path="/submission-history/:assignmentId/:problemId/:historyId"
+            exact
+            allowedRoles={['admin', 'ta', 'student']}
+            component={SubmissionHistory}
           />
           {/* Admin */}
           <AuthRoute
