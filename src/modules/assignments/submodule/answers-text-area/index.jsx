@@ -16,7 +16,7 @@ class AnswersTextArea extends React.PureComponent {
   static defaultProps = {
     value: undefined,
     onChange: undefined,
-    rows: 4,
+    rows: 8,
     className: '',
     disabled: false,
   };

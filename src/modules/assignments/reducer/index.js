@@ -114,6 +114,16 @@ const handleDispatches = {
     });
   },
 
+  [AT.SUBMIT_ANSWERS.success]: (state) => {
+    window.onbeforeunload = undefined;
+    if (window.UiAutosave) {
+      clearTimeout(window.UiAutosave);
+      window.UiAutosave = undefined;
+    }
+    return _.assign({}, state, {
+      currentAnswersIsDirty: false,
+    });
+  },
 };
 
 /**

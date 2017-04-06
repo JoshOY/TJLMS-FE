@@ -58,6 +58,10 @@ class AssignmentsModule extends React.Component {
   }
 
   componentDidMount() {
+    if (window.UiAutosave) {
+      clearTimeout(window.UiAutosave);
+      window.UiAutosave = undefined;
+    }
     this.props.dispatch(
       Actions.fetchAssignmentListAsync(),
     ).then(() => {
@@ -88,6 +92,10 @@ class AssignmentsModule extends React.Component {
       (nextProps.match.params.problemId !== this.props.match.params.problemId) &&
       (nextProps.currentAssignment)
     ) {
+      if (window.UiAutosave) {
+        clearTimeout(window.UiAutosave);
+        window.UiAutosave = undefined;
+      }
       this.props.dispatch(
         Actions.fetchAssignmentDetailAsync(
           nextProps.match.params.assignmentId,
@@ -101,6 +109,13 @@ class AssignmentsModule extends React.Component {
           ),
         ));
       });
+    }
+  }
+
+  componentWillUnmount() {
+    if (window.UiAutosave) {
+      clearTimeout(window.UiAutosave);
+      window.UiAutosave = undefined;
     }
   }
 
@@ -236,7 +251,8 @@ class AssignmentsModule extends React.Component {
                     (currentAssignment ?
                       (currentAssignment.end_at < (new Date()).getTime()) :
                       false
-                    )
+                    ) ||
+                    (!currentAnswersIsDirty)
                   }
                 >
                   Save

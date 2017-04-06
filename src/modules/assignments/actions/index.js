@@ -89,6 +89,11 @@ export default class Actions {
   };
 
   static changeAnswerValue = (answerIdx, newValue) => (dispatch) => {
+    if (!window.UiAutosave) {
+      window.UiAutosave = setTimeout(() => {
+        dispatch(Actions.submitAnswersAsync());
+      }, 60 * 1000);
+    }
     dispatch({
       type: AT.CHANGE_ANSWER_VALUE,
       payload: {
@@ -119,6 +124,10 @@ export default class Actions {
             type: AT.SUBMIT_ANSWERS.success,
             payload: respObj,
           });
+          if (window.UiAutosave) {
+            clearTimeout(window.UiAutosave);
+            window.UiAutosave = undefined;
+          }
           return 0;
         }
         message.error(respObj.reason);
