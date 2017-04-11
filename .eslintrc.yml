@@ -69,3 +69,6 @@ rules:
     - off
   no-underscore-dangle:
     - off
+  import/no-webpack-loader-syntax:
+    - off
+

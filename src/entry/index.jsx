@@ -4,6 +4,9 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
+import loadLogin from 'bundle-loader?lazy!../modules/login';
+import loadAssignment from 'bundle-loader?lazy!../modules/assignments';
+
 /**
  * vendor styles
  */
@@ -16,14 +19,35 @@ import '../common/styles/index.sass';
 
 import AppRouter from '../router';
 import store from '../store';
+import Bundle from '../common/components/bundle';
+
 import {
-  Login,
   NotFound,
-  Assignments,
+  // Assignments,
   Auth,
   Admin,
   SubmissionHistory,
 } from '../modules';
+
+/* Code splitting */
+// const loadLogin = () => import('../modules/login');
+// const loadAssignment = () => import('../modules/assignments');
+
+const Login = routerProps => (
+  <Bundle load={loadLogin} {...routerProps}>
+    {(LoginView, props) => (
+      LoginView ? <LoginView {...props} /> : <div />
+    )}
+  </Bundle>
+);
+
+const Assignments = routerProps => (
+  <Bundle load={loadAssignment} {...routerProps}>
+    {(AssignmentView, props) => (
+      AssignmentView ? <AssignmentView {...props} /> : <div />
+    )}
+  </Bundle>
+);
 
 const { AssignmentManagement } = Admin;
 
@@ -70,80 +94,93 @@ if (window.APP_DEV_ENV) {
   window.UiStore = store;
 }
 
+class App extends React.Component {
+
+  componentDidMount() {
+  }
+
+  render() {
+    return (
+      <Provider store={store}>
+        <AppRouter>
+          <Switch>
+            <Route
+              path="/login"
+              exact
+              component={Login}
+            />
+            {/* Assignments */}
+            <AuthRoute
+              path="/assignments"
+              exact
+              allowedRoles={['admin', 'ta', 'student']}
+              component={Assignments}
+            />
+            <AuthRoute
+              path="/assignments/change-pwd"
+              exact
+              allowedRoles={['admin', 'ta', 'student']}
+              component={Assignments}
+            />
+            <AuthRoute
+              path="/assignments/:assignmentId"
+              exact
+              allowedRoles={['admin', 'ta', 'student']}
+              component={Assignments}
+            />
+            <AuthRoute
+              path="/assignments/:assignmentId/:problemId"
+              exact
+              allowedRoles={['admin', 'ta', 'student']}
+              component={Assignments}
+            />
+            <AuthRoute
+              path="/submission-history/:assignmentId/:problemId"
+              exact
+              allowedRoles={['admin', 'ta', 'student']}
+              component={SubmissionHistory}
+            />
+            <AuthRoute
+              path="/submission-history/:assignmentId/:problemId/:historyId"
+              exact
+              allowedRoles={['admin', 'ta', 'student']}
+              component={SubmissionHistory}
+            />
+            {/* Admin */}
+            <AuthRoute
+              path="/admin"
+              allowedRoles={['admin', 'ta']}
+              component={Admin}
+            >
+              <Switch>
+                <Route
+                  path="/admin/"
+                  exact
+                  component={() => null}
+                />
+                <Route
+                  path="/admin/:assignmentId"
+                  component={AssignmentManagement}
+                />
+                <Route
+                  component={() => <Redirect to="/404" />}
+                />
+              </Switch>
+            </AuthRoute>
+            <Route path="/auth" component={Auth} />
+            <Redirect exact from="/" to="/auth" />
+            <Route component={NotFound} />
+          </Switch>
+        </AppRouter>
+      </Provider>
+    );
+  }
+
+}
+
 const main = async () => {
   ReactDOM.render(
-    <Provider store={store}>
-      <AppRouter>
-        <Switch>
-          <Route
-            path="/login"
-            exact
-            component={Login}
-          />
-          {/* Assignments */}
-          <AuthRoute
-            path="/assignments"
-            exact
-            allowedRoles={['admin', 'ta', 'student']}
-            component={Assignments}
-          />
-          <AuthRoute
-            path="/assignments/change-pwd"
-            exact
-            allowedRoles={['admin', 'ta', 'student']}
-            component={Assignments}
-          />
-          <AuthRoute
-            path="/assignments/:assignmentId"
-            exact
-            allowedRoles={['admin', 'ta', 'student']}
-            component={Assignments}
-          />
-          <AuthRoute
-            path="/assignments/:assignmentId/:problemId"
-            exact
-            allowedRoles={['admin', 'ta', 'student']}
-            component={Assignments}
-          />
-          <AuthRoute
-            path="/submission-history/:assignmentId/:problemId"
-            exact
-            allowedRoles={['admin', 'ta', 'student']}
-            component={SubmissionHistory}
-          />
-          <AuthRoute
-            path="/submission-history/:assignmentId/:problemId/:historyId"
-            exact
-            allowedRoles={['admin', 'ta', 'student']}
-            component={SubmissionHistory}
-          />
-          {/* Admin */}
-          <AuthRoute
-            path="/admin"
-            allowedRoles={['admin', 'ta']}
-            component={Admin}
-          >
-            <Switch>
-              <Route
-                path="/admin/"
-                exact
-                component={() => null}
-              />
-              <Route
-                path="/admin/:assignmentId"
-                component={AssignmentManagement}
-              />
-              <Route
-                component={() => <Redirect to="/404" />}
-              />
-            </Switch>
-          </AuthRoute>
-          <Route path="/auth" component={Auth} />
-          <Redirect exact from="/" to="/auth" />
-          <Route component={NotFound} />
-        </Switch>
-      </AppRouter>
-    </Provider>,
+    <App />,
     document.getElementById('app-root'),
   );
 };

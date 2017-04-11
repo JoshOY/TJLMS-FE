@@ -46,7 +46,7 @@ export default function (env) {
       filename: '[name].js?[chunkhash]',
       path: isProduction ? prjRoot('dist') : prjRoot('devbuild'),
       publicPath: isProduction ? '/static/' : '/static/',
-      chunkFilename: '[name].chunk.js?[chunkhash]',
+      chunkFilename: '[name]-[id].chunk.js?[chunkhash]',
     },
     /* module */
     module: {
